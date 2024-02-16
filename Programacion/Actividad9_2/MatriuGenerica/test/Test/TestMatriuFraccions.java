@@ -13,6 +13,8 @@ public class TestMatriuFraccions {
         Fraccio f4 = new Fraccio(1, 2);
         Fraccio fArray[][]={{f1,f2},{f3,f4}};
         mafra.sumar(fArray);
-        mafra.imprimirUltimaOperacio();      
+        mafra.imprimirUltimaOperacio(); 
+        mafra.multiplicar(fArray);
+        mafra.imprimirUltimaOperacio();
     }
 }
