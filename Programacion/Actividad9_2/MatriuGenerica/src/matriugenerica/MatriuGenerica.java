@@ -35,7 +35,11 @@ public abstract class MatriuGenerica<T extends Number> {
 
     public abstract T aleatori();
 
-    public void sumar(T[][] matriu) throws MatriuException {
+    public void sumar(T[][] matriu) throws MatriuException { 
+      if ((this.matriu.length != matriu.length) || (this.matriu[0].length != matriu[0].length)) {
+      throw new MatriuException("Las matriu a sumar no és de tamany " + this.matriu.length);
+     }
+        
         T[][] resultat = (T[][]) new Number[this.matriu.length][this.matriu[0].length];
 
         for (int i = 0; i < resultat.length; i++) {
@@ -51,6 +55,9 @@ public abstract class MatriuGenerica<T extends Number> {
     }
 
     public void multiplicar(T[][] matriu) throws MatriuException {
+         if (this.matriu[0].length != matriu.length) {
+      throw new MatriuException("La matriu a multiplicar no té una grandària compatible. Ha de tindre " + this.matriu[0].length + " files");
+    }
         T[][] resultat = (T[][]) new Number[this.matriu.length][matriu[0].length];
 
         for (int i = 0; i < resultat.length; i++) {
