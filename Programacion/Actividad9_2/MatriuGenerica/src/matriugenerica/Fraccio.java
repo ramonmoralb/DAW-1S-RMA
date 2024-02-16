@@ -49,7 +49,7 @@ public class Fraccio extends Number {
         return new Fraccio (numerador,denominador);               
     }
     public Fraccio multipicacio(Fraccio fraccio){
-        return new Fraccio (numerador,denominador);
+        return new Fraccio (this.numerador * fraccio.getNumerador(), this.denominador * fraccio.getDenominador());
     }
     @Override
     public String toString(){
