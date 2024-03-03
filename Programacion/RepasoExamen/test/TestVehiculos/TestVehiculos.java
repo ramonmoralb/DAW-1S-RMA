@@ -48,6 +48,7 @@ public class TestVehiculos {
         
         //Interface alquilable
          System.out.println("TERCERA PARTE");
+          System.out.println("Alquiler de coches");
          //creo coches alquilables y pruebo 
          CocheAlquilable cocheAlquiler1 = new CocheAlquilable("4444Alqui", "Leon", 4, true, 100);
          CocheAlquilable cocheAlquiler2 = new CocheAlquilable("5555Alqui", "Tigra", 4, true, 1);
