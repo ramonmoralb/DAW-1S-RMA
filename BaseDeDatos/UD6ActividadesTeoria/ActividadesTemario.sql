@@ -31,4 +31,26 @@ DBMS_OUTPUT.PUT_LINE('Contraseña : '||UPPER(nombre)||'_'||dosDigPass);
 
 END;
 
+
+--Actividad 3
+/*Crea un bloque que realice la división de dos variables y muestre una excepción ZERO_DIVIDE si el divisor es cero*/
+SET SERVEROUTPUT on;
+
+DECLARE
+    divisor NUMBER;
+    dividendo NUMBER;
+    resultado NUMBER;
+
+BEGIN
+    
+    divisor := 0;
+    dividendo := 1;
+    resultado := dividendo/divisor;
+    
+    DBMS_OUTPUT.PUT_LINE(resultado);
+    
+    EXCEPTION
+    WHEN ZERO_DIVIDE THEN 
+        DBMS_OUTPUT.PUT_LINE('El divisor no puede ser 0');
+END;
 	
