@@ -82,4 +82,31 @@ BEGIN
     END IF;
 
 END;
+
+
+/* Actividad 5
+A partir de una base y exponente, mediante la acumulación de productos,
+calcula la potencia utilizando la instrucción loop.
+*/
+
+DECLARE 
+        base NUMBER(5);
+        exponente NUMBER(2);
+        exponente_print NUMBER(2);
+        resultado_potencia NUMBER(9);
+
+BEGIN
+    base := 3;
+    exponente :=2;
+    exponente_print := exponente;
+    resultado_potencia := base;
+    
+     WHILE  exponente-1>0 LOOP  
+     resultado_potencia :=resultado_potencia * base;
+     exponente:= exponente-1;
+     END LOOP;
+    
+    dbms_output.put_line('El resultado de ['||base||'] elevado a ['||exponente_print||'] es igual a ['||resultado_potencia||']');
+    
+END;
 	
