@@ -53,4 +53,33 @@ BEGIN
     WHEN ZERO_DIVIDE THEN 
         DBMS_OUTPUT.PUT_LINE('El divisor no puede ser 0');
 END;
+
+/*Actividad 4
+Crea un programa que procesa una transacción bancaria. Antes de permitir retirar 500€ de la cuenta 3, 
+se asegura de que la cuenta tenga fondos suficientes para cubrir la retirada.
+Si los fondos están disponibles, el programa debita la cuenta. De lo contrario,
+el programa inserta un registro en una tabla de auditoría.
+*/
+
+DECLARE 
+    nombre_banco VARCHAR2(50);
+    num_cuenta number(20);
+    saldo number(9);
+    importe_retirar number(6);
+
+BEGIN 
+    nombre_banco :='BBVA';
+    num_cuenta := 1122334455;
+    saldo := 100;
+    importe_retirar:= 500;
+    
+    IF saldo<importe_retirar THEN 
+        DBMS_OUTPUT.PUT_LINE('El importe ha retirar seleccionado de la cuenta nº: ['||num_cuenta||' del banco ' ||nombre_banco|| '] es ['||importe_retirar||'] y es menor que el saldo disponible el cual es ['||saldo||']'); 
+    ELSE 
+    saldo := saldo-importe_retirar;
+        DBMS_OUTPUT.PUT_LINE('El importe ha retirar seleccionado es ['||importe_retirar||'] ha sido retirado correctamente.'); 
+        DBMS_OUTPUT.PUT_LINE('Su saldo de la cuenta nº: ['||num_cuenta||' del banco ' ||nombre_banco|| '] es de : '||saldo); 
+    END IF;
+
+END;
 	
