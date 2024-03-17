@@ -10,7 +10,7 @@ CREATE TABLE empleats (
 numemp INTEGER PRIMARY KEy,
 nom TEXT,
 edat INTEGER,
-oficina INTEGER FOR KEY REFERENCES oficines(oficina),
+oficina INTEGER FOREIGN KEY REFERENCES oficines(oficina),
 ocupacio TEXT,
 CONTRACTE TEXT  
 );
