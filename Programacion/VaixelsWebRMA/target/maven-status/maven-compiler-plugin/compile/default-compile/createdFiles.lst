@@ -1,0 +1,8 @@
+controlador\addVaixell.class
+com\mycompany\vaixelswebrma\JakartaRestConfiguration.class
+lloguervaixells\Iot.class
+lloguervaixells\Veler.class
+lloguervaixells\Vaixell.class
+lloguervaixells\Esportiu.class
+com\mycompany\vaixelswebrma\resources\JakartaEE8Resource.class
+lloguervaixells\Lloguer.class

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html lang="ca">
+    <head>
+        <title>Formulari nou vaixell</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=ZuUnPsO1Lib568SfbUrvhL3wx35sl7K-ncdTh3rhCI6i3UELCeL2bxy4Fbo5o89AYAse6Qdfr4TOrYQD_nmd9hVO1vd6s-PS0PUoqmre79GJBmVrgyOOzB91mLmw6Ddgi2qTZS8Kyz038HO_hVFXNEmm012dceyfa6JCRsOTZJjwt4SbCl1zToLC5tqzIaGi" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9hdWxlcy5lZHUuZ3ZhLmVzL3NlbWlwcmVzZW5jaWFsL3BsdWdpbmZpbGUucGhwLzE3MjkwMzYvbW9kX2Fzc2lnbi9pbnRyb2F0dGFjaG1lbnQvMC9pbmRleC5odG1sP2ZvcmNlZG93bmxvYWQ9MQ"/><style>
+            input,select{
+                margin-bottom: 1em;
+            }
+        </style>
+    </head>
+    <body onload="canviarInputs()">
+        <nav class="navbar navbar-light bg-light justify-content-end">
+            <ul class="nav justify-content-end ">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="index.html">Alta de vaixells</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="LlistaVaixells.jsp">Llista de vaixells</a>
+                </li>
+            </ul>
+        </nav>
+
+        <h1 class="text-center">Alta de nou vaixell</h1>
+        <form style="width:50%; min-width: 450px; margin: 0 auto;" method="post" action="addVaixell">
+            <label for="matricula" class="form-label">Matrícula: </label>
+            <input class="form-control" type="text" name="matricula" id="matricula" required="required" pattern="[0-9]{5}" placeholder="12345"/>
+            <label for="eslora" class="form-label">Eslora: </label>
+            <input class="form-control" type="text" name="eslora" id="eslora" required="required" pattern="[0-9]+.?[0-9]*" placeholder="1.57"/>
+            <label for="anyFabricacio" class="form-label">Any de fabricació: </label>
+            <input class="form-control" type="text" name="anyFabricacio" id="anyFabricacio" required="required" pattern="[0-9]{4}" placeholder="2023"/>
+            <label for="tipus" class="form-label">Tipus de vaixell: </label>
+            <select class="form-select" id="tipus" name="tipus" onchange="canviarInputs()">
+                <option value="veler">Veler</option>
+                <option value="iot">Iot</option>
+                <option value="esportiva">Embarcació esportiva</option>
+            </select>
+            <label for="potencia" class="form-label">Potència: </label>
+            <input class="form-control" type="text" name="potencia" id="potencia"  pattern="[0-9]+" placeholder="20"/>
+            <label for="cabines" class="form-label">Quantitat de cabines: </label>
+            <input class="form-control" type="text" name="cabines" id="cabines" pattern="[0-9]+" placeholder="2"/>
+            <label for="mastelers" class="form-label">Quantitat de mastelers: </label>
+            <input class="form-control" type="text" name="mastelers" id="mastelers" pattern="[0-9]+" placeholder="3"/>
+            <input class="btn btn-primary" type="submit" value="Afegir" />
+
+        </form>
+        <script>
+
+            function canviarInputs() {
+                var seleccio = document.getElementById("tipus").value;
+                document.getElementById("potencia").removeAttribute("disabled");
+                document.getElementById("potencia").value = "";
+                document.getElementById("cabines").removeAttribute("disabled");
+                document.getElementById("cabines").value = "";
+                document.getElementById("mastelers").removeAttribute("disabled");
+                document.getElementById("mastelers").value = "";
+                if (seleccio === "esportiva") {
+                    bloquejar("cabines");
+                    bloquejar("mastelers");
+                } else if (seleccio === "veler") {
+                    bloquejar("cabines");
+                    bloquejar("potencia");
+                } else {
+                    bloquejar("mastelers");
+                }
+
+
+            }
+
+            function bloquejar(element) {
+                document.getElementById(element).value = "0";
+                document.getElementById(element).setAttribute("disabled", "disabled");
+            }
+        </script>
+    </body>
+</html>
