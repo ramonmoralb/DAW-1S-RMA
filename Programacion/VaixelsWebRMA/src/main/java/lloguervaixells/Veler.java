@@ -27,4 +27,9 @@ public class Veler extends Vaixell {
         return super.getFactor() + this.getNombreMastelers() * 5;
     }
 
+    @Override
+    public String toString() {
+        return super.toString()+ " Número de mastiles: "+nombreMastelers; 
+    }
+
 }

@@ -5,6 +5,8 @@
  */
 package lloguervaixells;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author jmas
@@ -35,6 +37,20 @@ public class Vaixell {
 
     public double getFactor() {
         return this.getEslora() * 10;
+    }
+    
+    public static Vaixell buscar(ArrayList<Vaixell> vaixells, String matricula){
+        for (Vaixell vaixell : vaixells){ 
+            if(vaixell.getMatricula().equals(matricula)){
+                return vaixell;
+            }
+        }
+        return null;
+    }
+    
+    @Override
+    public String toString(){
+        return "Matricula: "+matricula+", eslora: "+eslora+", año fabricación: "+anyFabricacio+".";
     }
 
 }

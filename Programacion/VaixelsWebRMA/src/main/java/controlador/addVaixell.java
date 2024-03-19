@@ -6,16 +6,21 @@ package controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lloguervaixells.Vaixell;
+import lloguervaixells.Veler;
 
 /**
  *
  * @author Usuario
  */
 public class addVaixell extends HttpServlet {
+
+    private static ArrayList<Vaixell> vaixels;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,10 +39,28 @@ public class addVaixell extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet addVaixell</title>");            
+            out.println("<title>Servlet addVaixell</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet addVaixell at " + request.getContextPath() + "</h1>");
+            //si el array está vacio, lo inicializa
+            if (vaixels == null) {
+                vaixels = new ArrayList<>();
+            }
+            //agrego condiciones, cada tipo de barco, recibe unos parametros para ser  creado. 
+            String tipus = request.getParameter("tipus");
+            if (tipus.equals("veler")) {
+                Veler veler = new Veler(
+                        Integer.parseInt(request.getParameter("mastelers")), // necesario usar parse para transformar al dato que espera el constructor.
+                        request.getParameter("matricula"),                  // en caso de los strings es el parametro por defecto.
+                        Double.parseDouble(request.getParameter("eslora")),
+                        Integer.parseInt(request.getParameter("anyFabricacio"))
+                );
+
+                vaixels.add(veler);
+                out.println("<p>Añadido </p>" + veler.toString());
+            }
+
             out.println("</body>");
             out.println("</html>");
         }

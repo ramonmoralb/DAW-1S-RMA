@@ -23,9 +23,14 @@ public class Esportiu extends Vaixell {
     
     
     
+    @Override
     public double getFactor(){
         return super.getFactor() + this.getPotencia()/2;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return super.toString() +" Potencia: "+potencia; 
+    }
+       
 }
