@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+#formulario{
+    margin-top: 10px;
+    border: 1px solid black;
+    width: 25%;
+    padding: 10px;
+}
+form{
+    display: flex;
+    flex-direction: column;
+}
+label {
+    margin-bottom: 5px;
+}
+select, input {
+    margin-bottom: 10px;
+    padding: 3px;
+    width: fit-content; /*el desplegable tendrá el ancho del contenido*/
+}
+#formulario h2 {
+    margin-top: -25px; /* dandole un margen negativo lo introduzco en el borde*/
+    background-color: white; /*añade fondo blanco para que tape la linea del borde */
+    width: fit-content; /*el fondo blanco solo afecta al contenido*/
+} 
