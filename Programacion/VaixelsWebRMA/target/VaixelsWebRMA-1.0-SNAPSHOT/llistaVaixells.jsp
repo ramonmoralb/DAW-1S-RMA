@@ -14,7 +14,11 @@
         <title>JSP Page</title>
     </head>
     <body>
- 
+        <%  ArrayList<Vaixell> vaixels = (ArrayList<Vaixell> )session.getAttribute("vaixels"); %> <%-- pendiente de definir pero funciona--%>
+        <%for (Vaixell vaixell : vaixels) {
+              out.print(""+vaixell.toString());
+        
+            }%>
         <h1>Aquí la lista de Barcos</h1>
     </body>
 </html>

@@ -22,8 +22,10 @@ import lloguervaixells.Veler;
  * @author Usuario
  */
 public class addVaixell extends HttpServlet {
+
     private ArrayList<Vaixell> vaixels;
-    
+    private String missatge;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,15 +46,16 @@ public class addVaixell extends HttpServlet {
             out.println("<title>Servlet addVaixell</title>");
             out.println("</head>");
             out.println("<body>");
-           // out.println("<h1>Servlet addVaixell at " + request.getContextPath() + "</h1>");
-            //HttpSession session = request.getSession();
+            // out.println("<h1>Servlet addVaixell at " + request.getContextPath() + "</h1>");
+            HttpSession session = request.getSession();
             //si el array está vacio, lo inicializa
-           
-           
-             // ArrayList<Vaixell> vaixels = (ArrayList<Vaixell>) session.getAttribute("vaixels"); // pruebas
+
+            missatge = (String) session.getAttribute("missatge");
+            session.setAttribute("missatge", missatge);  //necesario ponerlo despues de cada modificación del string
+            vaixels = (ArrayList<Vaixell>) session.getAttribute("vaixels");  //variable de session
             if (vaixels == null) {
                 vaixels = new ArrayList<>();
-                //session.setAttribute("vaixels", vaixels); // introduce datos a la variable de sesion
+                session.setAttribute("vaixels", vaixels); // introduce datos a la variable de sesion
             }
             //agrego condiciones, cada tipo de barco, recibe unos parametros para ser  creado. 
             String tipus = request.getParameter("tipus");
@@ -64,12 +67,17 @@ public class addVaixell extends HttpServlet {
                             Double.parseDouble(request.getParameter("eslora")),
                             Integer.parseInt(request.getParameter("anyFabricacio"))
                     );
-                    if (Vaixell.buscar(vaixels, veler.getMatricula()) == null) {
+                    if (Vaixell.buscar(vaixels, veler.getMatricula()) != null) {
                         vaixels.add(veler);
-                        
+                        missatge = "Velero añadido correctamente.";
+                        session.setAttribute("missatge", missatge);
+
                         response.sendRedirect("anyadidoBarco.jsp");
                     } else {
-                        out.println("<p>La matricula ya existe.</p>");
+                        missatge = "Algo a fallado. La matrícula existe.";
+
+                        session.setAttribute("missatge", missatge);
+                        response.sendRedirect("anyadidoBarco.jsp");
                     }
                 } catch (NumberFormatException e) {
                     out.println("<p>Error: Los datos introducidos no están en formato correcto</p>");
