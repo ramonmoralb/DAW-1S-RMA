@@ -1,5 +1,6 @@
 controlador\addVaixell.class
 com\mycompany\vaixelswebrma\JakartaRestConfiguration.class
+controlador\calcularLloguer.class
 lloguervaixells\Iot.class
 lloguervaixells\Veler.class
 lloguervaixells\Vaixell.class

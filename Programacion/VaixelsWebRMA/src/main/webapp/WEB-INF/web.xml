@@ -8,6 +8,10 @@
         <servlet-name>addVaixell</servlet-name>
         <servlet-class>controlador.addVaixell</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>calcularLloguer</servlet-name>
+        <servlet-class>controlador.calcularLloguer</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>addVaixel</servlet-name>
         <url-pattern>/addVaixel</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>addVaixell</servlet-name>
         <url-pattern>/addVaixell</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>calcularLloguer</servlet-name>
+        <url-pattern>/calcularLloguer</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

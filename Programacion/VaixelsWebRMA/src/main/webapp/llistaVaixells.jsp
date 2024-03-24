@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>ListaVaixells</title>
     </head>
     <body>
         <h1>Lista de barcos</h1>
@@ -31,10 +31,13 @@
                 <tr>
 
                     <%  ArrayList<Vaixell> vaixels = (ArrayList<Vaixell>) session.getAttribute("vaixels"); %> <%-- pendiente de definir pero funciona--%>
+                    
                     <%for (Vaixell vaixell : vaixels) {
                             //añadir todos los casos
+                            
                             if (vaixell instanceof Veler) {
                             out.print( "<tr>");
+                               
                                 out.print( "<td>Veler</td>");
                                 out.print( "<td>"+vaixell.getMatricula()+"</td>");
                                 out.print( "<td>"+vaixell.getEslora()+"</td>");
@@ -42,8 +45,8 @@
                                 out.print( "<td>-</td>");
                                 out.print( "<td>-</td>");
                                 out.print( "<td>"+((Veler) vaixell).getNombreMastelers()+"</td>");
-                                out.println("<td><a href=\"url\" target=\"_blank\">simular</a></td>");
-                            out.print( "</tr>");    
+                                out.println("<td><a href=\"simulador.jsp?matricula=" + vaixell.getMatricula() + "\" target=\"_blank\">simular</a></td>"); //em el enlace paso por parametroGet
+                                out.print( "</tr>");    
                             }
                             else if (vaixell instanceof Iot) {
                             out.print( "<tr>");
@@ -54,7 +57,7 @@
                                 out.print( "<td>"+((Iot) vaixell).getPotencia()+"</td>");
                                 out.print( "<td>"+((Iot) vaixell).getNombreCabines()+"</td>");
                                 out.print( "<td>-</td>");
-                                out.println("<td><a href=\"url\" target=\"_blank\">simular</a></td>");
+                                out.println("<td><a href=\"simulador.jsp?matricula=" + vaixell.getMatricula() + "\" target=\"_blank\">simular</a></td>");
                              out.print( "</tr>");    
                             }
                             else if (vaixell instanceof Esportiu) {
@@ -66,7 +69,7 @@
                                 out.print( "<td>"+((Esportiu) vaixell).getPotencia()+"</td>");
                                 out.print( "<td>-</td>");
                                 out.print( "<td>-</td>");
-                                out.println("<td><a href=\"url\" target=\"_blank\">simular</a></td>");
+                                out.println("<td><a href=\"simulador.jsp?matricula=" + vaixell.getMatricula() + "\" target=\"_blank\">simular</a></td>");
                              out.print( "</tr>");    
                             }
 
