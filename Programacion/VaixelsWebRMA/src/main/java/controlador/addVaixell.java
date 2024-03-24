@@ -67,7 +67,7 @@ public class addVaixell extends HttpServlet {
                             Double.parseDouble(request.getParameter("eslora")),
                             Integer.parseInt(request.getParameter("anyFabricacio"))
                     );
-                    if (Vaixell.buscar(vaixels, veler.getMatricula()) != null) {
+                    if (Vaixell.buscar(vaixels, veler.getMatricula()) == null) {
                         vaixels.add(veler);
                         missatge = "Velero añadido correctamente.";
                         session.setAttribute("missatge", missatge);
@@ -83,6 +83,32 @@ public class addVaixell extends HttpServlet {
                     out.println("<p>Error: Los datos introducidos no están en formato correcto</p>");
                 }
             }
+
+            if (tipus.equals("esportiva")) {
+            try {
+                
+                    Esportiu esportiu = new Esportiu(Integer.parseInt(request.getParameter("potencia")),
+                            request.getParameter("matricula"),
+                            Double.parseDouble(request.getParameter("eslora")),
+                            Integer.parseInt(request.getParameter("anyFabricacio")));
+                    if (Vaixell.buscar(vaixels, esportiu.getMatricula()) == null) {
+                        vaixels.add(esportiu);
+                        missatge = "Esportiu añadido correctamente.";
+                        session.setAttribute("missatge", missatge);                    
+
+                        response.sendRedirect("anyadidoBarco.jsp");
+                    } else {
+                        missatge = "Algo a fallado. La matrícula existe.";
+
+                        session.setAttribute("missatge", missatge);
+                        response.sendRedirect("anyadidoBarco.jsp");
+                    }
+
+                
+            } catch (NumberFormatException e) {
+                out.println("<p>Error: Los datos introducidos no están en formato correcto</p>");
+            }
+            }
             if (tipus.equals("iot")) {
                 try {
                     Iot iot = new Iot(
@@ -94,35 +120,21 @@ public class addVaixell extends HttpServlet {
                     );
                     if (Vaixell.buscar(vaixels, iot.getMatricula()) == null) {
                         vaixels.add(iot);
-                        out.println("<p>Añadido </p>" + iot.toString());
-                        out.println("<a href=\"index.html\"> VOLVER </a>");
+                        missatge = "Iot añadido correctamente.";
+                        session.setAttribute("missatge", missatge);
+
+                        response.sendRedirect("anyadidoBarco.jsp");
                     } else {
-                        out.println("<p>La matricula ya existe.</p>");
+                        missatge = "Algo a fallado. La matrícula existe.";
+
+                        session.setAttribute("missatge", missatge);
+                        response.sendRedirect("anyadidoBarco.jsp");
                     }
 
                 } catch (NumberFormatException e) {
                     out.println("<p>Error: Los datos introducidos no están en formato correcto</p>");
                 }
             }
-            try {
-                if (tipus.equals("esportiva")) {
-                    Esportiu esportiu = new Esportiu(Integer.parseInt(request.getParameter("potencia")),
-                            request.getParameter("matricula"),
-                            Double.parseDouble(request.getParameter("eslora")),
-                            Integer.parseInt(request.getParameter("anyFabricacio")));
-                    if (Vaixell.buscar(vaixels, esportiu.getMatricula()) == null) {
-                        vaixels.add(esportiu);
-                        out.println("<p>Añadido </p>" + esportiu.toString());
-                        out.println("<a href=\"llistaVaixells.jsp\"> VOLVER </a>");
-                    } else {
-                        out.println("<p>La matricula ya existe.</p>");
-                    }
-
-                }
-            } catch (NumberFormatException e) {
-                out.println("<p>Error: Los datos introducidos no están en formato correcto</p>");
-            }
-
             out.println("</body>");
             out.println("</html>");
         }
