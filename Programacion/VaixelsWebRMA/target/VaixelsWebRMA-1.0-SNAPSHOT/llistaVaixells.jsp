@@ -14,11 +14,11 @@
         <title>ListaVaixells</title>
     </head>
     <body>
-        <% //si entra al if de calcular lloguer debe mostrar el mensaje de error
+        <% //si entra al if de calcular lloguer debe mostrar el mensaje de error al ser redireccionado
             String error = (String) request.getAttribute("error");
             if (error != null && !error.isEmpty()) {
         %>
-        <div class="error-message">
+        <div >
             <%= error%>
         </div>
         <%
