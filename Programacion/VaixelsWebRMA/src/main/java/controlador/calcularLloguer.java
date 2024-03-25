@@ -43,30 +43,40 @@ public class calcularLloguer extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet calcularLloguer at wet" + request.getContextPath() + "</h1>");
+
             HttpSession session = request.getSession();   // necesito crear session
-            ArrayList<Vaixell> vaixells = (ArrayList<Vaixell>) session.getAttribute("vaixels"); 
             
-           // Vaixell vaixell =  Vaixell.buscar(addVaixell.vaixels, request.getParameter("matricula"));
-             Vaixell vaixell = Vaixell.buscar(vaixells, request.getParameter("matricula"));
-             out.println(vaixell.toString());
-             int dias = Integer.parseInt(request.getParameter("dias"));
-             String dni = request.getParameter("dni");
-             String nombre = request.getParameter("nombre");
-             
-             //metodo del alquiler
+            String matricula = request.getParameter("matricula");
+            ArrayList<Vaixell> vaixells = (ArrayList<Vaixell>) session.getAttribute("vaixels");
+            if(matricula == null||matricula.isEmpty()||vaixells==null){
+                  request.setAttribute("error", "aqui el mensaje de error"); //establece e introduce el mensaje de error al redirigir el dispatcher se puede usar para mostrar el mensaje mediante un condicional en la pagina de destino
+                  request.getRequestDispatcher("llistaVaixells.jsp").forward(request, response); 
+            }
+            /*
+            out.println("<p>antes del dispatcher</p>");
+            request.setAttribute("error", "aqui el mensaje de error");
+            request.getRequestDispatcher("llistaVaixells.jsp").forward(request, response); 
+            */
+            Vaixell vaixell = Vaixell.buscar(vaixells, request.getParameter("matricula"));
+            out.println(vaixell.toString());
+            int dias = Integer.parseInt(request.getParameter("dias"));
+            String dni = request.getParameter("dni");
+            String nombre = request.getParameter("nombre");
+
+            //metodo del alquiler
             Lloguer alquiler = new Lloguer(request.getParameter("nombre"),
-                    request.getParameter("dni"), 
+                    request.getParameter("dni"),
                     Integer.parseInt(request.getParameter("dias")),
                     Integer.parseInt(request.getParameter("posicion")),
                     vaixell);
             //uso el return
-            double precio =alquiler.getPreuLloguer();
-          
-            out.println("<h2> nombre = "+nombre+"</h2>");
-            out.println("<h2> dni = "+dni+"</h2>");
-            out.println("<h2> dias = "+dias+"</h2>");
-            out.println("<h2> Precio = "+precio+"</h2>");
-            out.println("<h2> datos = "+vaixell.toString()+"</h2>");
+            double precio = alquiler.getPreuLloguer();
+
+            out.println("<h2> nombre = " + nombre + "</h2>");
+            out.println("<h2> dni = " + dni + "</h2>");
+            out.println("<h2> dias = " + dias + "</h2>");
+            out.println("<h2> Precio = " + precio + "</h2>");
+            out.println("<h2> datos = " + vaixell.toString() + "</h2>");
             out.println("</body>");
             out.println("</html>");
         }

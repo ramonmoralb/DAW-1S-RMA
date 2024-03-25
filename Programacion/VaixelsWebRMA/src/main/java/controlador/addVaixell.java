@@ -21,6 +21,7 @@ public class addVaixell extends HttpServlet {
 
     private static ArrayList<Vaixell> vaixels;
     private String missatge;
+   // private boolean anyadido; //pruebas
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -66,7 +67,10 @@ public class addVaixell extends HttpServlet {
                     if (Vaixell.buscar(vaixels, veler.getMatricula()) == null) {
                         vaixels.add(veler);
                         missatge = "Velero añadido correctamente.";
+                       // anyadido = true;
                         session.setAttribute("missatge", missatge);
+                       // session.setAttribute("anyadido", anyadido);
+                        
 
                         response.sendRedirect("anyadidoBarco.jsp");
                     } else {

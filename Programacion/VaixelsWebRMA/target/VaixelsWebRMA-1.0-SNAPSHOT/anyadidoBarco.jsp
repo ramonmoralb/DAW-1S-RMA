@@ -9,9 +9,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-       <% String missatge = (String) session.getAttribute("missatge"); %>
-         <h1>aqui el mensaje</h1>
-         <p><%= missatge %></p>
+        <%
+            String missatge = (String) session.getAttribute("missatge");
+           // boolean anyadido = (boolean) session.getAttribute("anyadido");
+        %>
+       
+   
+        <p><%= missatge%></p>
+        
         <a href="llistaVaixells.jsp">Continuar</a>
+        <a href="index.html">Volver</a>
     </body>
 </html>

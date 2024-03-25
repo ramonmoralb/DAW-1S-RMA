@@ -8,11 +8,14 @@
     </head>
     <body>
         <%
-            // Establecer la matrícula en la sesión si está presente en la solicitud
+            // recojo el valor de matricula
             String matricula = request.getParameter("matricula");
-           // session.setAttribute("matricula", matricula);
+           // session.setAttribute("matricula", matricula);  //no necesario el formulario le pasa el valor al servlet
         %>
-        <h1>Simulación del alquiler del barco <%= matricula %></h1>
+        <nav>
+            <a href="index.html">Alta vaixells</a>
+        </nav>
+        <h1>Simulación del alquiler del barco <%=matricula %></h1>
         <form method="post" action="calcularLloguer">
             <label for="nombre">Nombre: </label>
             <input type="text" name="nombre">
