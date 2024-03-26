@@ -20,8 +20,7 @@ import lloguervaixells.Veler;
 public class addVaixell extends HttpServlet {
 
     private static ArrayList<Vaixell> vaixels;
-    private String missatge;
-   // private boolean anyadido; //pruebas
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,109 +33,68 @@ public class addVaixell extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet addVaixell</title>");
-            out.println("</head>");
-            out.println("<body>");
-            // out.println("<h1>Servlet addVaixell at " + request.getContextPath() + "</h1>");
             HttpSession session = request.getSession();
-            //si el array está vacio, lo inicializa
-
-            missatge = (String) session.getAttribute("missatge");
-            session.setAttribute("missatge", missatge);  //necesario ponerlo despues de cada modificación del string
-            vaixels = (ArrayList<Vaixell>) session.getAttribute("vaixels");  //variable de session
             if (vaixels == null) {
                 vaixels = new ArrayList<>();
-                session.setAttribute("vaixels", vaixels); // introduce datos a la variable de sesion
+                session.setAttribute("vaixels", vaixels);
             }
-            //agrego condiciones, cada tipo de barco, recibe unos parametros para ser  creado. 
+
             String tipus = request.getParameter("tipus");
-            if (tipus.equals("veler")) {
-                try {
-                    Veler veler = new Veler(
-                            Integer.parseInt(request.getParameter("mastelers")), // necesario usar parse para transformar al dato que espera el constructor.
-                            request.getParameter("matricula"), // en caso de los strings es el parametro por defecto.
-                            Double.parseDouble(request.getParameter("eslora")),
-                            Integer.parseInt(request.getParameter("anyFabricacio"))
-                    );
-                    if (Vaixell.buscar(vaixels, veler.getMatricula()) == null) {
-                        vaixels.add(veler);
-                        missatge = "Velero añadido correctamente.";
-                       // anyadido = true;
-                        session.setAttribute("missatge", missatge);
-                       // session.setAttribute("anyadido", anyadido);
-                        
+            String nextPage = "llistaVaixells.jsp";
+            String missatge = null;
 
-                        response.sendRedirect("anyadidoBarco.jsp");
-                    } else {
-                        missatge = "Algo a fallado. La matrícula existe.";
-
-                        session.setAttribute("missatge", missatge);
-                        response.sendRedirect("anyadidoBarco.jsp");
-                    }
-                } catch (NumberFormatException e) {
-                    out.println("<p>Error: Los datos introducidos no están en formato correcto</p>");
-                }
-            }
-
-            if (tipus.equals("esportiva")) {
             try {
-                
-                    Esportiu esportiu = new Esportiu(Integer.parseInt(request.getParameter("potencia")),
-                            request.getParameter("matricula"),
-                            Double.parseDouble(request.getParameter("eslora")),
-                            Integer.parseInt(request.getParameter("anyFabricacio")));
-                    if (Vaixell.buscar(vaixels, esportiu.getMatricula()) == null) {
-                        vaixels.add(esportiu);
-                        missatge = "Esportiu añadido correctamente.";
-                        session.setAttribute("missatge", missatge);                    
+                switch (tipus) {
+                    case "veler":
+                        Veler veler = new Veler(
+                                Integer.parseInt(request.getParameter("mastelers")),
+                                request.getParameter("matricula"),
+                                Double.parseDouble(request.getParameter("eslora")),
+                                Integer.parseInt(request.getParameter("anyFabricacio"))
+                        );
+                        if (Vaixell.buscar(vaixels, veler.getMatricula()) == null) {
+                            vaixels.add(veler);
+                        } else {
+                            missatge = "La matrícula ya existe.";
+                        }
+                        break;
 
-                        response.sendRedirect("anyadidoBarco.jsp");
-                    } else {
-                        missatge = "Algo a fallado. La matrícula existe.";
+                    case "esportiva":
+                        Esportiu esportiu = new Esportiu(
+                                Integer.parseInt(request.getParameter("potencia")),
+                                request.getParameter("matricula"),
+                                Double.parseDouble(request.getParameter("eslora")),
+                                Integer.parseInt(request.getParameter("anyFabricacio"))
+                        );
+                        if (Vaixell.buscar(vaixels, esportiu.getMatricula()) == null) {
+                            vaixels.add(esportiu);
+                        } else {
+                            missatge = "La matrícula ya existe.";
+                        }
+                        break;
 
-                        session.setAttribute("missatge", missatge);
-                        response.sendRedirect("anyadidoBarco.jsp");
-                    }
-
-                
-            } catch (NumberFormatException e) {
-                out.println("<p>Error: Los datos introducidos no están en formato correcto</p>");
-            }
-            }
-            if (tipus.equals("iot")) {
-                try {
-                    Iot iot = new Iot(
-                            Integer.parseInt(request.getParameter("cabines")),
-                            Integer.parseInt(request.getParameter("potencia")),
-                            request.getParameter("matricula"),
-                            Double.parseDouble(request.getParameter("eslora")),
-                            Integer.parseInt(request.getParameter("anyFabricacio"))
-                    );
-                    if (Vaixell.buscar(vaixels, iot.getMatricula()) == null) {
-                        vaixels.add(iot);
-                        missatge = "Iot añadido correctamente.";
-                        session.setAttribute("missatge", missatge);
-
-                        response.sendRedirect("anyadidoBarco.jsp");
-                    } else {
-                        missatge = "Algo a fallado. La matrícula existe.";
-
-                        session.setAttribute("missatge", missatge);
-                        response.sendRedirect("anyadidoBarco.jsp");
-                    }
-
-                } catch (NumberFormatException e) {
-                    out.println("<p>Error: Los datos introducidos no están en formato correcto</p>");
+                    case "iot":
+                        Iot iot = new Iot(
+                                Integer.parseInt(request.getParameter("cabines")),
+                                Integer.parseInt(request.getParameter("potencia")),
+                                request.getParameter("matricula"),
+                                Double.parseDouble(request.getParameter("eslora")),
+                                Integer.parseInt(request.getParameter("anyFabricacio"))
+                        );
+                        if (Vaixell.buscar(vaixels, iot.getMatricula()) == null) {
+                            vaixels.add(iot);
+                        } else {
+                            missatge = "La matrícula ya existe.";
+                        }
+                        break;
                 }
+            } catch (NumberFormatException e) {
+                missatge = "Error: Los datos introducidos no están en formato correcto";
             }
-            out.println("</body>");
-            out.println("</html>");
+
+            request.setAttribute("missatge", missatge);
+            request.getRequestDispatcher(nextPage).forward(request, response);
         }
     }
 

@@ -11,21 +11,22 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
         <title>ListaVaixells</title>
     </head>
     <body>
-        <% //si entra al if de calcular lloguer debe mostrar el mensaje de error al ser redireccionado
-            String error = (String) request.getAttribute("error");
-            if (error != null && !error.isEmpty()) {
+        <h1>Lista de barcos</h1>
+        <% 
+    String missatge = (String) request.getAttribute("missatge");
+    if (missatge != null && !missatge.isEmpty()) {
         %>
         <div >
-            <%= error%>
+            <%= missatge%>
         </div>
         <%
-            }// establecer el formato que pide la practica
+            }
         %>
 
-        <h1>Lista de barcos</h1>
         <table>
 
             <tr>
@@ -41,14 +42,13 @@
             <tbody>
                 <tr>
 
-                    <%  ArrayList<Vaixell> vaixels = (ArrayList<Vaixell>) session.getAttribute("vaixels"); %> <%-- pendiente de definir pero funciona--%>
+                    <%  ArrayList<Vaixell> vaixels = (ArrayList<Vaixell>) session.getAttribute("vaixels"); %> 
 
                     <%for (Vaixell vaixell : vaixels) {
                             //añadir todos los casos
 
                             if (vaixell instanceof Veler) {
                                 out.print("<tr>");
-
                                 out.print("<td>Veler</td>");
                                 out.print("<td>" + vaixell.getMatricula() + "</td>");
                                 out.print("<td>" + vaixell.getEslora() + "</td>");
