@@ -13,22 +13,28 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <title>ListaVaixells</title>
+        <style>
+            #container {
+                text-align: end;
+            }
+        </style>
+
     </head>
     <body>
+        <div id="container"> <a href="index.html">Alta de barcos</a></div>
+
+
         <h1>Lista de barcos</h1>
         <% 
+    ArrayList<Vaixell> vaixels = (ArrayList<Vaixell>) session.getAttribute("vaixels");         
     String missatge = (String) request.getAttribute("missatge");
-    if (missatge != null && !missatge.isEmpty()) {
+        if (missatge != null && !missatge.isEmpty()) {
         %>
         <div >
             <%= missatge%>
         </div>
-        <%
-            }
-        %>
-
+        <%}%>
         <table>
-
             <tr>
                 <th>Tipo</th>
                 <th>Matrícula</th>
@@ -41,12 +47,9 @@
             </tr>
             <tbody>
                 <tr>
-
-                    <%  ArrayList<Vaixell> vaixels = (ArrayList<Vaixell>) session.getAttribute("vaixels"); %> 
-
-                    <%for (Vaixell vaixell : vaixels) {
-                            //añadir todos los casos
-
+                    <%
+                    if (vaixels != null && !vaixels.isEmpty()) {
+                        for (Vaixell vaixell : vaixels) {
                             if (vaixell instanceof Veler) {
                                 out.print("<tr>");
                                 out.print("<td>Veler</td>");
@@ -81,10 +84,15 @@
                                 out.println("<td><a href=\"simulador.jsp?matricula=" + vaixell.getMatricula() + "\">Simular alquiler</a></td>");
                                 out.print("</tr>");
                             }
-
-                        }%>
-                </tr>    
-            </tbody>
-        </table>
-    </body>
-</html>
+                        }
+                        out.print("</tr>");
+                        out.print("</tbody>");
+                        out.print(" </table>");
+                     }else{
+                     out.print("</tbody>");
+                     out.print(" </table>");
+                     out.println("<p>No hay barcos</p>");
+                     out.println("<a href=\"index.html\">Alta de barcos</a>");                     
+                     } %>
+              </body>
+                    </html>

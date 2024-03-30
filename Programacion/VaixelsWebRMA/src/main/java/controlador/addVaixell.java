@@ -3,6 +3,7 @@ package controlador;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import javax.imageio.IIOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,33 +21,25 @@ import lloguervaixells.Veler;
 public class addVaixell extends HttpServlet {
 
     private static ArrayList<Vaixell> vaixels;
-    
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try (PrintWriter out = response.getWriter()) {
-            HttpSession session = request.getSession();
-            if (vaixels == null) {
-                vaixels = new ArrayList<>();
-                session.setAttribute("vaixels", vaixels);
-            }
+        HttpSession session = request.getSession();
+        if (vaixels == null) {
+            vaixels = new ArrayList<>();
+            session.setAttribute("vaixels", vaixels);
+        }
+        String tipus = request.getParameter("tipus");
+        String nextPage = "llistaVaixells.jsp";
+        String missatge = null;
 
-            String tipus = request.getParameter("tipus");
-            String nextPage = "llistaVaixells.jsp";
-            String missatge = null;
-
-            try {
-                switch (tipus) {
-                    case "veler":
+        try {
+            switch (tipus) {
+                case "veler":
+                    int mastiles = Integer.parseInt(request.getParameter("mastelers"));
+                    if (mastiles < 0) {
+                        missatge = "Los mástiles no pueden ser un número negativo.";
+                    } else {
                         Veler veler = new Veler(
                                 Integer.parseInt(request.getParameter("mastelers")),
                                 request.getParameter("matricula"),
@@ -58,9 +51,14 @@ public class addVaixell extends HttpServlet {
                         } else {
                             missatge = "La matrícula ya existe.";
                         }
-                        break;
+                    }
+                    break;
 
-                    case "esportiva":
+                case "esportiva":
+                    int potencia = Integer.parseInt(request.getParameter("potencia"));
+                    if (potencia < 0) {
+                        missatge = "La potencia no puede ser un número negativo";
+                    } else {
                         Esportiu esportiu = new Esportiu(
                                 Integer.parseInt(request.getParameter("potencia")),
                                 request.getParameter("matricula"),
@@ -72,9 +70,18 @@ public class addVaixell extends HttpServlet {
                         } else {
                             missatge = "La matrícula ya existe.";
                         }
-                        break;
+                    }
+                    break;
 
-                    case "iot":
+                case "iot":
+                    potencia = Integer.parseInt(request.getParameter("potencia"));
+                    int cabinas = Integer.parseInt(request.getParameter("cabines"));
+                    if (potencia < 0) {
+                        missatge = "La potencia no puede ser un número negativo";
+                    } else if (cabinas < 0) {
+                        missatge = "Las cabinas no puede ser un número negativo";
+
+                    } else {
                         Iot iot = new Iot(
                                 Integer.parseInt(request.getParameter("cabines")),
                                 Integer.parseInt(request.getParameter("potencia")),
@@ -88,14 +95,14 @@ public class addVaixell extends HttpServlet {
                             missatge = "La matrícula ya existe.";
                         }
                         break;
-                }
-            } catch (NumberFormatException e) {
-                missatge = "Error: Los datos introducidos no están en formato correcto";
+                    }
             }
-
-            request.setAttribute("missatge", missatge);
-            request.getRequestDispatcher(nextPage).forward(request, response);
+        } catch (NumberFormatException e) {
+            missatge = "Error: Los datos introducidos no están en formato correcto";
         }
+        request.setAttribute("missatge", missatge);
+        request.getRequestDispatcher(nextPage).forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
