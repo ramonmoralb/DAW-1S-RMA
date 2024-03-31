@@ -32,6 +32,11 @@ public class calcularLloguer  extends HttpServlet  {
             request.getRequestDispatcher("llistaVaixells.jsp").forward(request, response);
         } else {
             try {
+                int posicion = Integer.parseInt(request.getParameter("posicion"));
+                if(posicion<=0){
+                   request.setAttribute("missatge", "La posición no puede ser 0 o menos.");
+                   request.getRequestDispatcher("simulador.jsp").forward(request, response);
+                }else{
                 Vaixell vaixell = Vaixell.buscar(vaixells, request.getParameter("matricula"));
                 Lloguer alquiler = new Lloguer(request.getParameter("nombre"),
                         request.getParameter("dni"),
@@ -42,6 +47,7 @@ public class calcularLloguer  extends HttpServlet  {
                 request.setAttribute("missatge", "Simulación completada.");
                 request.setAttribute("alquiler", alquiler);
                 request.getRequestDispatcher("mostrarLloguer.jsp").forward(request, response);
+                }
 
             } catch (NumberFormatException e) {
                 

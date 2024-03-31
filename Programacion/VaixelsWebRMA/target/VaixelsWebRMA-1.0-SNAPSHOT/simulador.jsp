@@ -19,6 +19,12 @@
     <a href="index.html">Alta vaixells</a>
 </nav>
 <h1>Simulación del alquiler del barco <%=matricula %></h1>
+<%
+    String missatge = (String) request.getAttribute("missatge");
+    if(missatge !=null){
+%>    
+<p> <%=missatge%></p>
+<% } %>
 <form method="post" action="calcularLloguer">
     <label for="nombre">Nombre: </label>
     <input type="text" name="nombre">

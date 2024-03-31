@@ -25,7 +25,8 @@
         <p><strong>Mensaje  </strong><%= missatge %></p>
         <p><strong>Nombre del cliente  :  </strong><%= alquiler.getNomClient() %></p>
         <p><strong>DNI del cliente     :  </strong><%= alquiler.getDniClient() %></p>
-        <p><strong>Dosición del amarre :  </strong><%= alquiler.getPosicioAmarrament() %></p>
+        <p><strong>Dias de cocupación  :  </strong><%= alquiler.getDiesOcupacio() %></p>
+        <p><strong>Posición del amarre :  </strong><%= alquiler.getPosicioAmarrament() %></p>
         <p><strong>Datos del barco     :  </strong>[<%= vaixell.toString() %>]</p>
         <p><strong>Total precio        :  </strong> <%= precio %> €</p>
         <br>
