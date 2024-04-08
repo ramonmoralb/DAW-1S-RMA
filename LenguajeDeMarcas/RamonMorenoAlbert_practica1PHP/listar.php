@@ -7,7 +7,7 @@ $boton_borrar = true;
 if (isset($_POST['borrar'])) {
     $_POST = [];
     $_SESSION = [];
-    $boton_borrar = false; // Desactiva el botón después de borrar las preferencias
+    $boton_borrar = false;
 }
 
 if (!empty($_SESSION)) {
@@ -20,34 +20,28 @@ if (!empty($_SESSION)) {
     $idioma = "";
     $publico = "";
     $zona = "";
-    $boton_borrar = false; // No hay preferencias, por lo tanto, desactiva el botón
+    $boton_borrar = false;
 }
 ?>
-
-
 <html>
     <head>
         <meta charset="UTF-8">
         <title>LListar</title>
-        <style>
-            #conte{
-                border: solid 1px black;
-                width: 450px;
-                padding: 10px;
-            }
-        </style>
+        <link rel="stylesheet" href="style.css"/>
+
     </head>
     <body>
         <div id="conte">
-            <p>DNI: <?php echo $dni ?></p>
-            <p>IDIOMA: <?php echo $idioma ?></p>
-            <p>PERFIL PUBLICO: <?php echo $publico ?></p>
-            <p>ZONA HORARIA: <?php echo $zona ?></p>
+            <p class="plistar" >DNI: <?php echo $dni ?></p>
+            <p class="plistar" >IDIOMA: <?php echo $idioma ?></p>
+            <p class="plistar" >PERFIL PUBLICO: <?php echo $publico ?></p>
+            <p class="plistar" >ZONA HORARIA: <?php echo $zona ?></p>
 
             <?php if ($boton_borrar) { ?>
                 <form action="listar.php" method="POST">
                     <input type="submit" name="borrar" value="Borra preferencias">
                 <?php } ?>
+
                 <?php if (!$boton_borrar) { ?>
                     <a href="persona.php">Volver</a>
                 <?php } ?>

@@ -1,27 +1,159 @@
+/*RamónMorenoAlbert*/
+
 *{
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
 }
-#formulario{
-    margin-top: 10px;
-    border: 1px solid black;
-    width: 25%;
-    padding: 10px;
+body{
+    max-width: 960px;
+    margin: auto;
+    background-color: gainsboro;
+    display: grid;
+     grid-auto-flow: row;
+  
+  
+    grid-template-columns: 45% 45%;
+    grid-template-rows:  100px 500px 75px;
+    grid-template-areas: 
+        'cabecera cabecera'
+        'principal allado'
+        'botones botones'
+        ;
+    
 }
-form{
+
+#cabecera{
+    
+    grid-area: cabecera;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    
+}
+#contenedorformulario {
+    background-color: #f0f0f0;
+    grid-area: principal;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#contenedorformulario form {
     display: flex;
     flex-direction: column;
 }
-label {
-    margin-bottom: 5px;
-}
-select, input {
+
+#contenedorformulario form label {
     margin-bottom: 10px;
-    padding: 3px;
-    width: fit-content; /*el desplegable tendrá el ancho del contenido*/
 }
-#formulario h2 {
-    margin-top: -25px; /* dandole un margen negativo lo introduzco en el borde*/
-    background-color: white; /*añade fondo blanco para que tape la linea del borde */
-    width: fit-content; /*el fondo blanco solo afecta al contenido*/
-} 
+
+#contenedorformulario form input[type="text"],
+#contenedorformulario form select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+#contenedorformulario form input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#contenedorformulario form input[type="submit"]:hover {
+    background-color: #45a049;
+}
+aside {
+    grid-area: allado;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+aside h2 {
+    margin: 0;
+    font-weight: bold;
+    margin-bottom: 10px; 
+}
+
+
+aside a,
+aside input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 0; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%; 
+    text-decoration: none; 
+    text-align: center; 
+    margin-top: 10px; 
+}
+
+#preferencias a:hover,
+#preferencias input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+
+
+/*listar*/
+#conte {
+    
+    width: 450px;
+    height: 300px;
+    background-color: #f0f0f0;
+    border:  1px solid black;
+    border-radius: 9px;
+    padding: 40px; 
+    margin-top: 20px;
+}
+
+.plistar {
+    margin-bottom: 10px;
+}
+
+
+input[type="submit"], a {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+input[type="submit"]:hover, a:hover {
+    background-color: #45a049;
+}
+
+
+#conte form {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+#conte form input[type="submit"] {
+    display: block;
+    margin-top: 10px;
+    width: 100%;
+}

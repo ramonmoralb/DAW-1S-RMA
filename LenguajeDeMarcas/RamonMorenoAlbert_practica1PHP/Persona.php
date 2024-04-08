@@ -3,9 +3,11 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <title>Preferencias</title>
+        <link rel="stylesheet" href="style.css"/>
     </head>
     <body>
+        <header id="cabecera"><h2>Preferencias</h2></header>
         <?php
         session_start();
         $mostrar = false;
@@ -20,15 +22,26 @@
             $_POST = []; // Limpiar $_POST solo si se ha enviado el formulario "borrar"
         }
         ?>
-        <div>
-            <h2>Preferencias</h2>
+
+
+        <?php if ($mostrar) { ?>
+            <aside>
+                <h2>Sus preferencias han sido guardadas.</h2>
+
+
+                <a href="listar.php">Mostrar preferencias</a>
+                <form method="POST" action="Persona.php">
+                    <input type="submit" name="borrar" value="Borrar">
+                </form>
+
+
+            </aside>
             <?php
-            if ($mostrar) {
-                echo '<p>La info ha sido guardada</p>';
-                $mostrar = false;
-            }
-            ?>
-            <form method="POST" action="Persona.php">
+            $mostrar = false;
+        }
+        ?>
+        <div id="contenedorformulario">
+            <form id="primerf" method="POST" action="Persona.php">
                 <label for="dni">DNI: </label>
                 <input type="text" name="dni">
                 <label for="idioma">Idioma: </label>
@@ -54,10 +67,7 @@
                 <input type="submit" name="enviar" value="enviar">
             </form>
         </div>
-        <form method="POST" action="Persona.php">
-            <input type="submit" name="borrar" value="Borrar">
-        </form>
-        <a href="listar.php">Mostrar preferencias</a>
+
 
     </body>
 </html>
