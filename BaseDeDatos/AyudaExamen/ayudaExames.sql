@@ -41,3 +41,20 @@ EXCEPTION
     WHEN ZERO_DIVIDE THEN
         DBMS_OUTPUT.PUT_LINE('No se puede dividir entre 0');
 END;
+
+--*** condicional if
+DECLARE
+	nombre_banco VARCHAR2(10) := 'BBVA';
+	num_cuenta VARCHAR2(20) := '20604785226-7';
+	saldo number(9) := 500;
+	imp_a_ret number(9) := 600;
+    
+BEGIN 
+    IF saldo<imP_a_ret THEN
+    	DBMS_OUTPUT.PUT_LINE('La cuenta nº: ['||num_cuenta||'] del banco '||nombre_banco||'  no dispone de saldo suficiente.' );
+		DBMS_OUTPUT.PUT_LINE('Saldo disponible: '||saldo||'€');
+	ELSE 
+        saldo := saldo-imp_a_ret;
+		DBMS_OUTPUT.PUT_LINE('Operación realizada.  Saldo restante: '||saldo||'€');
+	END IF;    
+END;
