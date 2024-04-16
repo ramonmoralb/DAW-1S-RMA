@@ -59,6 +59,17 @@ BEGIN
 	END IF;    
 END;
 
+--*** imprimir 10 num usando while
+DECLARE 
+	total_numeros number(2) := 10;
+	numero_inicial number(2):= 1;
+BEGIN
+	WHILE numero_inicial <= total_numeros LOOP
+	DBMS_OUTPUT.PUT_LINE(numero_inicial);
+	numero_inicial := numero_inicial+1;
+	END LOOP;
+END;
+
 -- imprimir 10 rayas '_' usando for
 DECLARE 
 	raya varchar2(2) :=  '_';
