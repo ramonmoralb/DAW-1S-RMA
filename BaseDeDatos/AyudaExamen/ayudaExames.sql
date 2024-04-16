@@ -50,11 +50,21 @@ DECLARE
 	imp_a_ret number(9) := 600;
     
 BEGIN 
-    IF saldo<imP_a_ret THEN
+    IF saldo<imp_a_ret THEN
     	DBMS_OUTPUT.PUT_LINE('La cuenta nº: ['||num_cuenta||'] del banco '||nombre_banco||'  no dispone de saldo suficiente.' );
 		DBMS_OUTPUT.PUT_LINE('Saldo disponible: '||saldo||'€');
 	ELSE 
         saldo := saldo-imp_a_ret;
 		DBMS_OUTPUT.PUT_LINE('Operación realizada.  Saldo restante: '||saldo||'€');
 	END IF;    
+END;
+
+-- imprimir 10 rayas '_' usando for
+DECLARE 
+	raya varchar2(2) :=  '_';
+	total_rayas number(2) := 10;
+BEGIN 
+	FOR i IN 1..total_rayas LOOP  --1. es el valor icicial de 'i', .total_rayas numero que se usa para salir del bucle for 
+    	DBMS_OUTPUT.PUT_LINE(raya);
+	END LOOP;
 END;
