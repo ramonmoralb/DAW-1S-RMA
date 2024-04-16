@@ -19,16 +19,17 @@ CREATE OR REPLACE FUNCTION generar_contrasenya (v_num_caracteres number) RETURN 
 END generar_contrasenya;
 
 -- creo la tabla que almacena la contraseña y el número del nuevo vendedor.
-CREATE TABLE vendedor_contrasenya  (
-            numvend  number(22) PRIMARY KEY,
-            contrasenya varchar2(100)  NOT NULL
+CREATE TABLE vendedor_contrasenya (
+    numvend NUMBER(22) PRIMARY KEY,
+    contrasenya VARCHAR2(100) NOT NULL,
+    FOREIGN KEY (numvend) REFERENCES vendedor(numvend)
 );
 
 --creo el trigger que se ejecutará despued de la inserción de un nuevo vendedor.
 CREATE OR REPLACE TRIGGER relacion_contrasenya_vendedor AFTER INSERT ON vendedor FOR EACH ROW
     DECLARE
-    	v_numvend vendedor.numvend%type;
-		v_contrasena varchar2(100);
+    	v_numvend vendedor.numvend%type;                  -- %type recoge el mismo tipo de dato que la columna de la tabla a la que hace referencia.
+	v_contrasena vendedor_contrasenya.contrasenya%type;
     BEGIN 
     	v_numvend := :new.numvend; 
       	v_contrasena := generar_contrasenya(6); 
@@ -43,7 +44,7 @@ CREATE OR REPLACE TRIGGER relacion_contrasenya_vendedor AFTER INSERT ON vendedor
     	DBMS_OUTPUT.PUT_LINE('Error: Se produjo un error al insertar en la tabla vendedor_contrasenya.');
 END;
 
---pruebas
+insert into vendedor values(33,'pepecont','comerpass','+34446546','calle calle', 'ALICANTE', 'ALICANTE'); 
 delete from vendedor where NUMVEND=33;
 delete from vendedor_contrasenya where NUMVEND=33;
 select * from vendedor;
