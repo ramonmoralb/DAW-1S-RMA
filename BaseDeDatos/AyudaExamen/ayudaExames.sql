@@ -79,3 +79,26 @@ BEGIN
     	DBMS_OUTPUT.PUT_LINE(raya);
 	END LOOP;
 END;
+
+--*** funciones
+--funcion que suma dos núemros que recibe por parametro.
+
+CREATE OR REPLACE FUNCTION sumar(num1 number, num2 number) RETURN number -- no poner aquí longitudes
+IS 
+	resultado number;
+BEGIN 
+	resultado := num1 + num2;
+  	RETURN resultado;
+END sumar;
+
+-- funcion que saluda a persona pasa por parametro.
+CREATE OR REPLACE FUNCTION saludar(nombre VARCHAR2) return VARCHAR2  -- no poner aqui longitudes
+IS
+    saludo VARCHAR2(100) := 'Hola mi nombre es : ';
+begin
+    saludo := saludo||nombre;
+	return saludo;
+end saludar;
+begin
+dbms_output.put_line(saludar('Ramón'));
+end;
