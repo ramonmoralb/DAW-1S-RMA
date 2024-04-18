@@ -146,3 +146,27 @@ select * from pieza;
 begin 
 mostrar_pieza_por_numero('DD-0001-30');
 end;
+
+
+--**** cursores
+CREATE OR REPLACE PROCEDURE mostrar_todas_piezas IS
+	CURSOR c_piezas IS  SELECT * FROM pieza;  -- introcude en el cursor todo el select, el cursor se puede recorrer con un bucle
+    v_numpieza pieza.numpieza%TYPE;  -- se declaran las variables que contiene el cursor, (son las que provienen del select)
+    v_nompieza pieza.nompieza%TYPE;  -- %TYPE para asegurarme que los tipos son los mismos
+    v_preciovent pieza.preciovent%TYPE;
+BEGIN 
+    OPEN c_piezas;  -- se abre el cursor y realizo el bucle
+    LOOP
+        FETCH c_piezas INTO v_numpieza, v_nompieza, v_preciovent; -- da en cada iteración del bucle el valor de cada fila por cada variable
+    EXIT WHEN c_piezas%NOTFOUND;  -- la condición para salir del bucle %NOTFOUnd
+       DBMS_OUTPUT.PUT_LINE('Número pieza [' || v_numpieza || ']  Nombre pieza [' || v_nompieza || '] Precio venta [' || v_preciovent || ']');
+    END LOOP;
+    CLOSE c_piezas;  --cierro el cursor
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+END mostrar_todas_piezas;
+--pruebas
+begin 
+mostrar_todas_piezas;
+end;
