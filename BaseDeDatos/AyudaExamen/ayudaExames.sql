@@ -102,3 +102,25 @@ end saludar;
 begin
 dbms_output.put_line(saludar('Ramón'));
 end;
+
+
+-- *** procedimientos
+-- procedimiento para borrar vendedores por numero de vendedor
+--(Tiene incluido para borrar de la tabla contraseña al ser clave foranea de otra tabla es necesario, si no fallaraia)--
+CREATE OR REPLACE PROCEDURE borrar_vendedor(v_numvend vendedor.numvend%TYPE) is
+    v_contador_vendedor number;
+begin
+    select count(*) into v_contador_vendedor from vendedor where numvend = v_numvend; --añade 1 al contador si encuntra vendedores,
+    if v_contador_vendedor > 0 then                                                   --uso el contador para el condicional 
+ 		delete from vendedor_contrasenya where numvend = v_numvend;                   --si existe conttraseña al ser clave foranea, se debe eliminar primero, si no fallar
+		delete from vendedor where numvend = v_numvend;
+        DBMS_OUTPUT.PUT_LINE('Vendedor borrado correctamente.');
+    else
+        DBMS_OUTPUT.PUT_LINE('No existe un vendedor con ese número de vendedor');
+    end if;
+end borrar_vendedor;
+--pruebas
+insert into vendedor values(33,'pepecont','comerpass','+34446546','calle calle', 'ALICANTE', 'ALICANTE'); 
+begin 
+borrar_vendedor(33);
+end;
