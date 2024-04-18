@@ -1,6 +1,11 @@
 
--- %type otorga a la variable declarada el mismo tipo de dato de la columna a la que hace referencia en una tabla 
--- ejemplo %type ->  v_numvend vendedor.numvend%type;
+-- %TYPE otorga a la variable declarada el mismo tipo de dato de la columna a la que hace referencia en una tabla 
+-- ejemplo %TYPE ->  v_numvend vendedor.numvend%type;
+
+-- %ROWTYPE almacena en una variable toda fila de una tabla
+-- ejemplo %ROWTYPE -> v_pieza pieza%ROWTYPE almacena(numpieza, nompieza, preciovent)
+-- para acceder  v_pieza.numpieza   v_pieza.nompieza  v_pieza.preciovent  
+-- ver más abajo procedimiento "mostrar_pieza_por_numero"
 
 
 
@@ -123,4 +128,21 @@ end borrar_vendedor;
 insert into vendedor values(33,'pepecont','comerpass','+34446546','calle calle', 'ALICANTE', 'ALICANTE'); 
 begin 
 borrar_vendedor(33);
+end;
+
+--USADO %ROWTYPE en este procedimiento
+CREATE OR REPLACE PROCEDURE mostrar_pieza_por_numero(v_numpieza pieza.numpieza%TYPE) IS
+v_pieza pieza%ROWTYPE;
+BEGIN 
+	SELECT * INTO v_pieza FROM pieza WHERE 	numpieza=v_numpieza;
+	DBMS_OUTPUT.PUT_LINE('Número pieza ['||v_pieza.numpieza||']  Nombre pieza ['||v_pieza.nompieza||']   Precio venta  ['||v_pieza.preciovent||']');
+exception 
+    WHEN NO_DATA_FOUND THEN	  -- excepción si el select no encuentra la pieza muestra el no data found y entra en la excepción
+DBMS_OUTPUT.PUT_LINE('Número pieza existente en la tabla pieza.');
+end  mostrar_pieza_por_numero;
+
+--pruebas
+select * from pieza;
+begin 
+mostrar_pieza_por_numero('DD-0001-30');
 end;
