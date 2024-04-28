@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Exercici5;
 
 /**
@@ -62,11 +58,16 @@ public class DatosMeterologicos {
     public void setPrecipitaciones(double precipitaciones) {
         this.precipitaciones = precipitaciones;
     }
+    
 
     @Override
     public String toString() {
-        return "DatosMeterologicos{" + "temperaturaMaxima=" + temperaturaMaxima + ", horaMaxima= " + horaMaxima + ",\ntemperaturaMinima= " + temperaturaMinima + ",  horaMinima= " + horaMinima + ",\nprecipitaciones= " + precipitaciones;
+        double diferenciaTemperatura = temperaturaMaxima - temperaturaMinima;
+        
+        diferenciaTemperatura = Math.round(diferenciaTemperatura * 100.0) / 100.0;
+        return "DatosMeterologicos:\n" + "Temperatura Maxima: " + temperaturaMaxima + ", Hora de máxima= " + horaMaxima + 
+                ",\nTemperatura Mínima= " + temperaturaMinima + ",  Hora de mínima= " + horaMinima + "\nDiferencia temperatura: " + diferenciaTemperatura +
+                ",\nPrecipitaciones= " + precipitaciones;
     }
-    
     
 }
