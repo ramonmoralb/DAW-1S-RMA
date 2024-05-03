@@ -1,0 +1,54 @@
+<!--Ramón Moreno Albert-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Ramón</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="contenedor">
+    <header class="tilulo"> <h1>Calculadora  con  JS  y  CSS</h1></header>
+   
+    <div id="calculadora">
+
+    <div class="pantalla" id="pantalla"></div> 
+    <div class="botones">
+        <input class="boton" type="button" value="7" onclick="calculadora.presionarNumero('7')">
+        <input class="boton" type="button" value="8" onclick="calculadora.presionarNumero('8')">
+        <input class="boton" type="button" value="9" onclick="calculadora.presionarNumero('9')">
+        <input class="boton" type="button" value="+" onclick="calculadora.presionarNumero('+')">
+        <input class="boton" type="button" value="x" onclick="calculadora.presionarNumero('x')">
+        
+        <input class="boton" type="button" value="4" onclick="calculadora.presionarNumero('4')">
+        <input class="boton" type="button" value="5" onclick="calculadora.presionarNumero('5')">
+        <input class="boton" type="button" value="6" onclick="calculadora.presionarNumero('6')">
+        <input class="boton" type="button" value="-" onclick="calculadora.presionarNumero('-')">
+        <input class="boton" type="button" value="/" onclick="calculadora.presionarNumero('/')">
+        
+        <input class="boton" type="button" value="1" onclick="calculadora.presionarNumero('1')">
+        <input class="boton" type="button" value="2" onclick="calculadora.presionarNumero('2')">
+        <input class="boton" type="button" value="3" onclick="calculadora.presionarNumero('3')">
+        <input class="boton" type="button" value="→" onclick="calculadora.borrarUltimo()">
+        <input class="boton" type="button" value="AC" onclick="calculadora.borrar()">
+        
+        <input class="boton" type="button" value="0" onclick="calculadora.presionarNumero('0')">
+        <input class="boton" type="button" value="." onclick="calculadora.presionarNumero('.')">
+        <input class="boton" type="button" value="00" onclick="calculadora.presionarNumero('00')">
+        <input class="boton" type="button" id="botonIgual" value="=" onclick="calculadora.presionarNumero('=')">
+        
+          <p>CASIO</p>
+         
+
+    </div> 
+    </div>
+
+    <footer class="piepagina"><p>Esto es el footer.</p></footer>
+</div>
+
+<script src="script.js"></script>
+<script src="calculadora.js"></script>
+
+</body>
+</html>
