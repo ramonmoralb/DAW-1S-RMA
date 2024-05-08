@@ -71,7 +71,9 @@ public class Main {
                 .filter(e -> e.getEdat() > 50)
                 .count()
         );
-
+        System.out.println();
+        
+        
         // 5. Imprimeix el nom dels empleats del departament d'informàtica, en majúscules.
         System.out.println("5. Imprimeix el nom dels empleats del departament d'informàtica, en majúscules.");
         listaDeEmpleados.stream()
@@ -80,7 +82,9 @@ public class Main {
                 //.map(Empleat::getNom)  //
                 .map(String::toUpperCase)
                 .forEach(System.out::println);
-
+        System.out.println();
+        
+        
         // 6. Imprimeix la quantitat de lletres de l'empleat d'informàtica amb el nom més llarg.
         System.out.println("6. Imprimeix la quantitat de lletres de l'empleat d'informàtica amb el nom més llarg.");
         listaDeEmpleados.stream()
@@ -90,6 +94,8 @@ public class Main {
                 .max()
                 .ifPresent(System.out::println);
         System.out.println();
+        
+        
         // 7. Imprimeix el nom dels departaments que comencen per C
         System.out.println("7. Imprimeix el nom dels departaments que comencen per C");
         listaDeEmpleados.stream()
@@ -98,6 +104,7 @@ public class Main {
                 .forEach(System.out::println);
         System.out.println();
 
+        
         // 8. Imprimeix la suma de totes les edats dels empleats
         System.out.println("8. Imprimeix la suma de totes les edats dels empleats");
         final int SUMA_EDADES = listaDeEmpleados.stream()
@@ -140,6 +147,9 @@ public class Main {
                 .toList();
         System.out.println(departametosCyCoalafa);
         System.out.println();
+        
+        
+        
         // 12. Mostra la mitjana d'edat dels empleats del departament d'informàtica.
         
         //para los del departamento de informatica
@@ -159,17 +169,52 @@ public class Main {
         
         
         //solución
+        System.out.println("12. La media de edad de los empleados del departamentoo de informatica es: ");
         listaDeEmpleados.stream()
                 .filter(e -> e.getDepartament().getNom().equals("Informàtica"))
                 .mapToInt(Empleat::getEdat)
                 .average()
                 .ifPresent(System.out::print)  // average() devuelve un Optional por lo tanto metodos de optional
                 ;
-        
+        System.out.println();
         
         
         // 13. Mostra un String que serà el resultat de concatenar la primera lletra de cada departament.
+        
+        // esto no devuelve un string pero muestra lo que pide
+        System.out.println("13. Mostra un String que serà el resultat de concatenar la primera lletra de cada departament.");
+            listaDeEmpleados.stream()
+                .map(e -> e.getDepartament().getNom().charAt(0))
+                .forEach(System.out::print)  // imprime directamente / pero no es un string
+                ;
+        System.out.println();
+        
+            //esto devuelve un string
+        String primerasLetrasStr = listaDeEmpleados.stream()
+                .map(e -> e.getDepartament().getNom().substring(0, 1))
+                .collect(Collectors.joining())                
+                ;
+           System.out.println(primerasLetrasStr);
+           System.out.println();
+            
+           //pruebas 
+           String alimentos = Stream.of("Patatas","Tomates")
+                   //.map(e -> e) //
+                   .collect(Collectors.joining("\n", "Lista de compra: \n", "\nplease wait..... "))
+                   ;
+           System.out.println(alimentos);
+           System.out.println();
+           
+      
         // 14. Mostra el número de telèfon més alt dels departaments.
+        System.out.println("14. Mostra el número de telèfon més alt dels departaments.");
+        listaDeEmpleados.stream()
+                .map(e -> e.getDepartament().getTelefon())
+                .max((a,b)-> a.compareTo(b)) // esto irá iterando y guardando en a el valor máximo y comparandolo con la siguiente entrada del mapa
+                .ifPresent(System.out::print) // max() devuelve optional   
+                ;
+             //gfd
+        
         // 15. Mostra el departament complet amb el número de telèfon més alt.
         // 16. Sense fer ús del mètode "getEmpleats". Dels departament que tenen treballadors, mostrar el nom del departament i el nombre de treballadors que hi treballen.
         // 17A. Guarda en un Map un registre per a cada Departament (que tinga treballadors) que tinga associat com a valor la llista d'empleats d'eixe departament
