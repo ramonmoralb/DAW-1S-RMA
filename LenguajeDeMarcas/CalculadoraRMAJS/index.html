@@ -1,20 +1,78 @@
 <!--Ramón Moreno Albert-->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Ramón</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<div id="contenedor">
-    <header class="tilulo"> <h1>Calculadora  con  JS  y  CSS</h1></header>
-   
-    <div id="calculadora">
 
-    <div class="pantalla" id="pantalla"></div> 
-    <div class="botones">
+<body>
+    <div id="contenedor">
+        <header class="tilulo">
+            <h1>Calculadora con JS y CSS</h1>
+        </header>
+
+        <div id="calculadora">
+
+            <div class="pantalla" id="pantalla"></div>
+            <div class="botones">
+
+<!--con data-  al pasar el this(objeto del button) uso el data para ver el tipo, 
+y con ello puedo usar condicionales para hacer lo que se necesita en cada monento
+pruebas.js
+-->
+                <button class="boton" onclick="calculadorad.pulsarTecla(this)" data-tecla-type="numero">7</button>
+                <button class="boton" onclick="calculadorad.pulsarTecla(this)" data-tecla-type="numero">8</button>
+                <button class="boton" onclick="calculadorad.pulsarTecla(this)" data-tecla-type="numero">9</button>
+                <button class="boton" onclick="calculadorad.pulsarTecla(this)" data-tecla-type="operador">+</button>
+                <button class="boton" onclick="calculadorad.pulsarTecla(this)" data-tecla-type="operador">x</button>
+                <button class="boton" onclick="calculadorad.pulsarTecla(this)" data-tecla-type="operador">4</button>
+                <button class="boton" onclick="calculadorad.pulsarTecla(this)" data-tecla-type="numero">5</button>
+                <button class="boton" onclick="calculadorad.pulsarTecla(this)" data-tecla-type="numero">6</button>
+                <button class="boton" onclick="calculadorad.pulsarTecla(this)" data-tecla-type="operador">-</button>
+                <button class="boton" onclick="calculadorad.pulsarTecla(this)" data-tecla-type="operador">/</button>
+                <button class="boton" onclick="calculadorad.pulsarTecla(this)" data-tecla-type="numero">1</button>
+                <button class="boton" onclick="calculadorad.pulsarTecla(this)" data-tecla-type="numero">2</button>
+                <button class="boton" onclick="calculadorad.pulsarTecla(this)" data-tecla-type="numero">3</button>
+                <button class="boton" id="borrarUltimo" onclick="calculadorad.pulsarTecla(this)" data-tecla-type="→">→</button>
+                <button class="boton" id="borrar" onclick="calculadorad.borrar()" data-tecla-type="AC">AC</button>
+                <button class="boton" onclick="calculadorad.pulsarTecla(this)" data-tecla-type="numero">0</button>
+                <button class="boton" onclick="calculadorad.pulsarTecla(this)" data-tecla-type="numero">.</button>
+                <button class="boton" onclick="calculadorad.pulsarTecla(this)" data-tecla-type="numero">00</button>
+                <button class="boton" id="igual" onclick="calculadorad.calcular()" data-tecla-type="=">=</button>
+
+
+
+                <!--funciona sin data
+        <button class="boton" onclick="calculadorad.pulsarNumero('7')" data-dnumero="7">7</button>
+        <button class="boton" onclick="calculadorad.pulsarNumero('8')" data-dnumero="8">8</button>
+        <button class="boton" onclick="calculadorad.pulsarNumero('9')" data-dnumero="9">9</button>
+        <button class="boton" onclick="calculadorad.pulsarNumero('+')" data-numero-type="+">+</button>
+        <button class="boton" onclick="calculadorad.pulsarNumero('x')" data-numero-type="x">x</button>
+        
+        <button class="boton" onclick="calculadorad.pulsarNumero('4')" data-dnumero="4">4</button>
+        <button class="boton" onclick="calculadorad.pulsarNumero('5')" data-dnumero="5">5</button>
+        <button class="boton" onclick="calculadorad.pulsarNumero('6')" data-dnumero="6">6</button>
+        <button class="boton" onclick="calculadorad.pulsarNumero('-')" data-numero-type="-">-</button>
+        <button class="boton" onclick="calculadorad.pulsarNumero('/')" data-numero-type="/">/</button>
+        
+        <button class="boton" onclick="calculadorad.pulsarNumero('1')" data-dnumero="1">1</button>
+        <button class="boton" onclick="calculadorad.pulsarNumero('2')" data-dnumero="2">2</button>
+        <button class="boton" onclick="calculadorad.pulsarNumero('3')" data-dnumero="3">3</button>
+        <button class="boton" id="borrarUltimo" onclick="calculadorad.pulsarNumero('→')">→</button>
+        <button class="boton" id="borrar" onclick="calculadorad.borrar()">AC</button>
+        
+        <button class="boton" onclick="calculadorad.pulsarNumero('0')" data-dnumero="0">0</button>
+        <button class="boton" onclick="calculadorad.pulsarNumero('.')" data-dnumero=".">.</button>
+        <button class="boton" onclick="calculadorad.pulsarNumero('00')" data-dnumero="00">00</button>
+        <button class="boton" onclick="calculadorad.calcular()" data-resultado="=">=</button>
+        -->
+
+
+                <!--
         <input class="boton" type="button" value="7" onclick="calculadora.presionarNumero('7')">
         <input class="boton" type="button" value="8" onclick="calculadora.presionarNumero('8')">
         <input class="boton" type="button" value="9" onclick="calculadora.presionarNumero('9')">
@@ -37,18 +95,21 @@
         <input class="boton" type="button" value="." onclick="calculadora.presionarNumero('.')">
         <input class="boton" type="button" value="00" onclick="calculadora.presionarNumero('00')">
         <input class="boton" type="button" id="botonIgual" value="=" onclick="calculadora.presionarNumero('=')">
-        
-          <p>CASIO</p>
-         
+        -->
+                <p>CASIO</p>
 
-    </div> 
+
+            </div>
+        </div>
+
+        <footer class="piepagina">
+            <p>Esto es el footer.</p>
+        </footer>
     </div>
 
-    <footer class="piepagina"><p>Esto es el footer.</p></footer>
-</div>
 
-<script src="script.js"></script>
-<script src="calculadora.js"></script>
+    <script src="pruebas.js"></script>
 
 </body>
+
 </html>
