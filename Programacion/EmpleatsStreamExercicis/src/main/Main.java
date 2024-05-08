@@ -213,7 +213,7 @@ public class Main {
                 .max((a,b)-> a.compareTo(b)) // esto irá iterando y guardando en a el valor máximo y comparandolo con la siguiente entrada del mapa
                 .ifPresent(System.out::print) // max() devuelve optional   
                 ;
-        
+             //gfd
         
         // 15. Mostra el departament complet amb el número de telèfon més alt.
         // 16. Sense fer ús del mètode "getEmpleats". Dels departament que tenen treballadors, mostrar el nom del departament i el nombre de treballadors que hi treballen.
