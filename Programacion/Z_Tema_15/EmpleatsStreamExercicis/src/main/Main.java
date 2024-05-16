@@ -7,19 +7,9 @@ package main;
 import dao.*;
 import dto.Empleat;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import dto.Departament;
-import java.util.Comparator;
-import static java.util.Comparator.comparing;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Consumer;
-import java.util.stream.Collector;
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
-import java.util.stream.IntStream;
+
 
 /**
  *
@@ -28,24 +18,21 @@ import java.util.stream.IntStream;
 public class Main {
 
     public static void main(String[] args) {
-        List<Departament>  listaDepartamentos = DepartamentsDAO.getDepartaments(); // creo la listaDedeparpamentos !! producción no contiene empleados
+        List<Departament> listaDepartamentos = DepartamentsDAO.getDepartaments(); // creo la listaDedeparpamentos !! producción no contiene empleados
         List<Empleat> listaDeEmpleados = EmpleatsDAO.getEmpleats();  // creo la lista de empleados
-      /*        System.out.println("Lista original de empleados: ");
+        /*        System.out.println("Lista original de empleados: ");
         for (Empleat e : listaDeEmpleados) { // con salto de linea
             System.out.println(e);
         }
         System.out.println();
-        */
+         */
         //muestro la lista con stream
         System.out.println("Lista de empleados con programación funcional: ");
         listaDeEmpleados.stream()
                 //.map(e -> e)  // no hace falta mapear, ya tiene toda la lista
-                .forEach(System.out::println)              
-                ;
+                .forEach(System.out::println);
         System.out.println();
 
-        
-        
         /*
         System.out.println("Lista de departamentos: ");  //muestra todos los departamentos, hasta producción que está vacio
         for (Departament e : listaDepartamentos) {        
@@ -54,36 +41,31 @@ public class Main {
         }
         System.out.println();
         System.out.println("----------------------------");
-        */
-        
+         */
         System.out.println("Lista departamentos c0n programación funcional");
         listaDepartamentos.stream()
-                .forEach(System.out::println) 
-                ;
+                .forEach(System.out::println);
         System.out.println();
         System.out.println("----------------------------");
-        
-        
 
         // 1.- Imprimeix el primer empleat trobat amb més de 50 anys
         System.out.println("1. Primero mayor de 50:");
-        listaDeEmpleados.stream()  // 
+        listaDeEmpleados.stream() // 
                 .filter(e -> e.getEdat() > 50) // la condición
                 .findFirst() // el primero que queda de la condición  
                 .ifPresent(e -> System.out.println(e)) // devuelve un optional, por eso el if present            
                 ;
         System.out.println();
         System.out.println("----------------------------");
-        
 
         // 2. Imprimeix true si tots els empleats son majors d'edat i false en cas contrari
         System.out.println("2. Imprimeix true si tots els empleats son majors d'edat i false en cas contrari");
-        final  boolean mayoresDeEdad = listaDeEmpleados.stream()  // meto en un boolean la lista, por eso tengo que buscar metodos que devuelvan true or false
-                .allMatch(e -> e.getEdat() >= 18); 
+        final boolean mayoresDeEdad = listaDeEmpleados.stream() // meto en un boolean la lista, por eso tengo que buscar metodos que devuelvan true or false
+                .allMatch(e -> e.getEdat() >= 18);
         System.out.println("Mayores de edad: " + mayoresDeEdad);
         System.out.println();
         System.out.println("----------------------------");
-        
+
         // 3. Imprimeix true si hi ha algun empleat major de 65 anys i false en cas contrari
         System.out.println("3. Imprimeix true si hi ha algun empleat major de 65 anys i false en cas contrari");
         final boolean hayMayores65 = listaDeEmpleados.stream()
@@ -92,22 +74,20 @@ public class Main {
         System.out.println();
         System.out.println("--------------");
 
-
         // 4. Imprimeix el número d'empleats que tenen més de 50 anys
-        System.out.println("Empleados mayores de 50: " + listaDeEmpleados.stream()  //lo puedo meter todo dentro de un print o como count devuelve un long hacer la constante e imprimirla
+        System.out.println("Empleados mayores de 50: " + listaDeEmpleados.stream() //lo puedo meter todo dentro de un print o como count devuelve un long hacer la constante e imprimirla
                 .filter(e -> e.getEdat() > 50)
                 .count()
         );
         System.out.println();
-        
-        final long  CANTIDADMAYORES50 = listaDeEmpleados.stream()
+
+        final long CANTIDADMAYORES50 = listaDeEmpleados.stream()
                 .filter(e -> e.getEdat() > 50)
-                .count()
-                ;
-        System.out.println("Empleados mayores de 50 con constante: "+ CANTIDADMAYORES50);
+                .count();
+        System.out.println("Empleados mayores de 50 con constante: " + CANTIDADMAYORES50);
         System.out.println();
         System.out.println("--------------");
-        
+
         // 5. Imprimeix el nom dels empleats del departament d'informàtica, en majúscules.
         System.out.println("5. Imprimeix el nom dels empleats del departament d'informàtica, en majúscules.");
         listaDeEmpleados.stream()
@@ -119,7 +99,6 @@ public class Main {
         System.out.println();
         System.out.println("--------------");
 
-        
         // 6. Imprimeix la quantitat de lletres de l'empleat d'informàtica amb el nom més llarg.
         System.out.println("6. Imprimeix la quantitat de lletres de l'empleat d'informàtica amb el nom més llarg.");
         listaDeEmpleados.stream()
@@ -127,19 +106,19 @@ public class Main {
                 .map(Empleat::getNom)
                 .mapToInt(m -> m.length())
                 .max()
-                .ifPresent(System.out::println);
+                .ifPresentOrElse(System.out::println, () -> System.out.println("No encontrado")); // 
+
         System.out.println();
-        
-        
+
         // 7. Imprimeix el nom dels departaments que comencen per C
         System.out.println("7. Imprimeix el nom dels departaments que comencen per C");
-        listaDeEmpleados.stream()
-                .map(e -> e.getDepartament().getNom())
+        listaDepartamentos.stream()
+                .map(e -> e.getNom())
                 .filter(n -> n.startsWith("C"))
                 .forEach(System.out::println);
         System.out.println();
         System.out.println("-----------------");
-        
+
         // 8. Imprimeix la suma de totes les edats dels empleats
         System.out.println("8. Imprimeix la suma de totes les edats dels empleats");
         final int SUMA_EDADES = listaDeEmpleados.stream()
@@ -152,139 +131,141 @@ public class Main {
         // 9 UTILITZA EL MÈTODE GETEMPLEATS DE LA CLASSE DEPARTAMENT (NOMÉS PER A L'EXERCICI 9 I 10)
         // Imprimeix la quantitat d'empleats de cada departament 
         System.out.println("9.  Imprimeix la quantitat d'empleats de cada departament");
-              listaDepartamentos.stream() 
-             .collect(Collectors.toMap(  departamento -> departamento.getNom() , departamento -> departamento.getEmpleatsNoUsar().size()))       
-             .forEach((a,b) -> System.out.println("Departamento: "+ a +" número operarios  "+ b))
-             ;
-         
-        
-    /*    //sin usar el getEmpleats, de la clase departament, faltaría un departamento por que está vaccio y desde la lista de empleados no lo recupera
-        Map<Departament, Long> empleadosPorDepartamento = listaDeEmpleados.stream()
-                .collect(groupingBy(Empleat::getDepartament, counting())); //groupingby en un map, primer lugar clave y segundo el valor
-        empleadosPorDepartamento.forEach((departamento, numero) -> System.out.println("Departamento: " + departamento + "  Empleados : " + numero));
-        System.out.println();
-      */  
-        
-      
+        listaDepartamentos.stream()
+                .collect(Collectors.toMap(departamento -> departamento.getNom(), departamento -> departamento.getEmpleatsNoUsar().size()))
+                .forEach((a, b) -> System.out.println("Departamento: " + a + " número operarios  " + b));
+
         // 10. UTILITZANT EL MÈTODE GETEMPLEATS DE LA CLASSE DEPARTAMENT (NOMÉS PER A L'EXERCICI 9 I 10)
         // Imprimeix la llista de noms dels empleats del departament comercial i de comptatilitat (una única llista d'String)
         System.out.println("10. Imprimeix la llista de noms dels empleats del departament comercial i de comptatilitat (una única llista d'String)");
         listaDepartamentos.stream()
                 .filter(e -> e.getNom().equals("Comptabilitat") || e.getNom().equals("Comercial"))
-                .flatMap(d -> d.getEmpleatsNoUsar().stream())
-                .toList() // no imprime los departamentos..
-                //.collect(Collectors.toMap(d -> d.getNom() , d  -> d.getEmpleatsNoUsar()))
-                //.forEach((a,b) -> System.out.println(a + b))
-                ;
-      
-        
-        
-        
-        System.out.println("----------------");
-        List<String> departametosCyCo = listaDeEmpleados.stream()
-                .filter(e -> e.getDepartament().getNom().equals("Comercial") || e.getDepartament().getNom().equals("Comptabilitat"))
-                .map(e -> e.getNom())
-                .toList();
-        System.out.println(departametosCyCo);
+                .map(r -> r.getEmpleatsNoUsar())
+                .flatMap(d -> d.stream())
+                .map(n -> n.getNom())
+                .toList()
+                .forEach(empleados -> System.out.println(empleados));
         System.out.println();
-        // 11. El mateix d'abans però mostra els noms ordenats alfabèticament.
+        System.out.println("--------------");
 
+        // para imprimir departamentos puedo hacer un map que key departamento value lista emp
+        System.out.println("Mapa que imprime los departamentos de contabilidad e comercial, con sus trabajadores:. ");
+        listaDepartamentos.stream()
+                .filter(e -> e.getNom().equals("Comptabilitat") || e.getNom().equals("Comercial"))
+                .collect(Collectors.toMap(e -> e.getNom(), e -> e.getEmpleatsNoUsar()))
+                .forEach((departamento, empleados) -> System.out.println("Departamento :  " + departamento + "\nNombre de los empleados:\n" + empleados));
+        System.out.println();
+        System.out.println("-----------------");
+
+        // 11. El mateix d'abans però mostra els noms ordenats alfabèticament.
         System.out.println("11. El mateix d'abans però mostra els noms ordenats alfabèticament");
-        List<String> departametosCyCoalafa = listaDeEmpleados.stream()
+        listaDeEmpleados.stream()
                 .filter(e -> e.getDepartament().getNom().equals("Comercial") || e.getDepartament().getNom().equals("Comptabilitat"))
                 .map(e -> e.getNom())
-                .sorted()   //  por defecto ordenalfabetico
-               // .sorted(comparing(String::length)) // comparara la longitud
-                .toList();
-        System.out.println(departametosCyCoalafa);
-        System.out.println();
-        
-        
-        
+                .sorted((a, b) -> a.compareTo(b))
+                .toList()
+                .forEach(empleado -> System.out.println(empleado));
+
         // 12. Mostra la mitjana d'edat dels empleats del departament d'informàtica.
-        
         //para los del departamento de informatica
         listaDeEmpleados.stream()
                 .filter(e -> e.getDepartament().getNom().equals("Informàtica"))
                 .map(Empleat::toString)
-                .forEach(System.out::println) 
-                ;
-        
+                .forEach(System.out::println);
+
 //tambien puedo sacar la suma de las edades.
-        System.out.println(listaDeEmpleados.stream()  // lo meto dentro del print y lo saco directamente, si no debería hacer una constante  final int SUMA ....
+        System.out.println(listaDeEmpleados.stream() // lo meto dentro del print y lo saco directamente, si no debería hacer una constante  final int SUMA ....
                 .filter(e -> e.getDepartament().getNom().equals("Informàtica"))
                 .mapToInt(Empleat::getEdat)
                 .sum());
-        
-               
-        
-        
+
         //solución
         System.out.println("12. La media de edad de los empleados del departamentoo de informatica es: ");
         listaDeEmpleados.stream()
                 .filter(e -> e.getDepartament().getNom().equals("Informàtica"))
                 .mapToInt(Empleat::getEdat)
                 .average()
-                .ifPresent(System.out::print)  // average() devuelve un Optional por lo tanto metodos de optional
+                .ifPresent(System.out::print) // average() devuelve un Optional por lo tanto metodos de optional
                 ;
         System.out.println();
-        
-        
+
         // 13. Mostra un String que serà el resultat de concatenar la primera lletra de cada departament.
-        
         // esto no devuelve un string pero muestra lo que pide
         System.out.println("13. Mostra un String que serà el resultat de concatenar la primera lletra de cada departament.");
-            listaDeEmpleados.stream()
+        listaDeEmpleados.stream()
                 .map(e -> e.getDepartament().getNom().charAt(0))
-                .forEach(System.out::print)  // imprime directamente / pero no es un string
+                .distinct()
+                .forEach(System.out::print) // imprime directamente / pero no es un string
                 ;
         System.out.println();
+        System.out.println("-----------------------------------------");
+        //esto devuelve un string
         
-            //esto devuelve un string
+        
         String primerasLetrasStr = listaDeEmpleados.stream()
                 .map(e -> e.getDepartament().getNom().substring(0, 1))
-                .collect(Collectors.joining())                
-                ;
-           System.out.println(primerasLetrasStr);
-           System.out.println();
-            
-           //pruebas 
-           String alimentos = Stream.of("Patatas","Tomates")
-                   //.map(e -> e) //
-                   .collect(Collectors.joining("\n", "Lista de compra: \n", "\nplease wait..... "))
-                   ;
-           System.out.println(alimentos);
-           System.out.println();
-           
+                .collect(Collectors.joining());
+        System.out.println(primerasLetrasStr);
+        System.out.println();
+        System.out.println("-----------------------------------------");
+
+
       
         // 14. Mostra el número de telèfon més alt dels departaments.
         System.out.println("14. Mostra el número de telèfon més alt dels departaments.");
-        Optional p = listaDeEmpleados.stream()
+       listaDeEmpleados.stream()
                 .map(e -> e.getDepartament().getTelefon())
-                .max((a,b)-> a.compareTo(b)) // esto irá iterando y guardando en a el valor máximo y comparandolo con la siguiente entrada del mapa
-                //.ifPresent(System.out::println) // max() devuelve optional   
+                .max((a, b) -> a.compareTo(b)) // esto irá iterando y guardando en a el valor máximo y comparandolo con la siguiente entrada del mapa
+                .ifPresent(System.out::println) // max() devuelve optional   
                 ;
-                p.ifPresent(System.out::println);  
-        
+        System.out.println();
+        System.out.println("-----------------------------------------");
+
         // 15. Mostra el departament complet amb el número de telèfon més alt.
-        
-        
-        
-        System.out.println();  
-        
-      listaDeEmpleados.stream()
-              .map(e -> e.getDepartament())
-              .max((a,b) -> a.getTelefon()-b.getTelefon()) 
-              .ifPresent(System.out::print)   
-              ;
+   
+
+        listaDeEmpleados.stream()
+                .map(e -> e.getDepartament())
+                .max((a, b) -> a.getTelefon() - b.getTelefon())
+                .ifPresentOrElse(e -> System.out.println("El número mas alto es: " + e), () -> System.out.println("No encontrado"));
+
         // 16. Sense fer ús del mètode "getEmpleats". Dels departament que tenen treballadors, mostrar el nom del departament i el nombre de treballadors que hi treballen.
-       
+        listaDeEmpleados.stream()
+                .map(Empleat::getDepartament)
+                .collect(Collectors.groupingBy(Departament::getNom, Collectors.counting())) //la segunda parte del gropuingBy interactua con los valores de la primera
+                .forEach((a, e) -> System.out.println("Departamento:  " + a + "\nNúmero de empleados: " + e))
+        ;
+       System.out.println("-----------------------------------------");
+        System.out.println();
         
         
         // 17A. Guarda en un Map un registre per a cada Departament (que tinga treballadors) que tinga associat com a valor la llista d'empleats d'eixe departament
+        listaDeEmpleados.stream()
+                //.map(Empleat::getDepartament)
+                .collect(Collectors.groupingBy(e -> e.getDepartament().getNom(), Collectors.toList()))
+                .forEach((a, e) -> System.out.println("Departamento:  " + a + "\nObjeto de empleados: " + e));
+
         // 17B. Igual que l'anterior pero la llista no serà d'empleats sino del nom dels empleats
+        listaDeEmpleados.stream()        
+                .collect(Collectors.groupingBy(e -> e.getDepartament().getNom(), Collectors.mapping(Empleat::getNom, Collectors.toList())))
+                .forEach((a, e) -> System.out.println("Departamento:  " + a + "\nNombre de empleados: " + e));       
+        System.out.println("-----------------------------------------");
+        System.out.println(); 
+        
         // 17C. Igual que l'anterior pero amb els empleats ordenats alfabèticament
+        
+           listaDeEmpleados.stream()        
+                .collect(Collectors.groupingBy(e -> e.getDepartament().getNom(), Collectors.mapping(Empleat::getNom, Collectors.toList()))) 
+                .forEach((a, e) -> System.out.println("Departamento:  " + a + "\nNombre de empleados: " + e.stream() // de la lista hago otro stream
+                                                                                                          .sorted((palabra1 , palabra2) -> palabra1.compareTo(palabra2))
+                                                                                                          .collect(Collectors.toList())           
+                        
+                ));       
+        System.out.println("-----------------------------------------");
+        System.out.println(); 
         // 18A. Obtín un Map que continga per a cada departament una llista d'enters grans (BigInteger) que es corresponguen amb les edats dels empleats d'eixe departament
+        
+        
         // 18B. El mateix que abans però en comptes de l'edat, el probable següent número primer
         // 19. Obtín un Map que continga per a cada departament l'empleat més jove.
         // 20. Obtín un String que continga el mateix que abans, amb el format "Departament1:Empleat1, Departament2:Empleat2 ..."
