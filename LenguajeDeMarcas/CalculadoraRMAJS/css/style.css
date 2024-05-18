@@ -1,0 +1,191 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+body{
+    background-image: url(../imagenes/ny.jpeg);
+    background-size: cover;
+    background-repeat:no-repeat ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+#contenedor {
+    
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    grid-template-rows: 100px 500px 100px;
+    
+    grid-template-areas: 
+    'cabecera cabecera cabecera'
+    '. calculadora .'
+    'pie pie pie'
+    ;
+    width: 800px;
+}
+
+.tilulo{
+    grid-area: cabecera; 
+}   
+
+#calculadora{
+    grid-area: calculadora;
+    background-color:#474444;
+    border-radius: 5px;
+    display: grid;
+    padding: 12px;
+    width: 450px;
+    grid-row-gap: 10px;
+    grid-template-columns: 100%;
+    grid-template-rows: 20% 70%;
+    grid-template-areas: 
+    'pantalla'
+    'botones'
+    ;
+
+}
+
+.piepagina{
+    
+    grid-area: pie;
+    font-size: 32px;
+    color: white;
+    margin-bottom: 0px;
+}
+
+.botones{
+   
+    grid-area: botones;
+    background-color: #575353;
+    margin-bottom: 5px;  
+    border-radius: 6px;
+    display: grid;
+    padding: 10px;
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 5px;   
+}
+.boton{
+    background-color: #888;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 45px;
+}
+
+img{
+    max-width: 100px;
+    max-height: 100px;
+}
+
+#igual{
+
+ grid-column: span 2;
+     
+}
+.pantalla {
+    font-family: 'DotGothic16', sans-serif;
+    color: #000000a1;
+    grid-area: pantalla;
+    background-color: rgb(71, 38, 38);
+    border-radius: 6px;
+    font-size: 60px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    overflow: auto; 
+}
+
+.boton{
+    border-radius: 12px;
+    cursor: pointer;
+}
+.boton:hover{
+    background-color: #e99393a1;
+}
+
+.modal{
+    position: fixed;  
+    top: 0;
+    bottom: 0 ;
+    left: 0;
+    right: 0;
+    background-image: url(../imagenes/madera.jpg);
+    background-size: cover;
+    background-repeat:no-repeat ;
+    display: flex;
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s , transform 0.3s;
+    
+}
+.modal__contenedor{
+    margin: auto;
+    width:750px;
+    height: 600px; 
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+}
+.modal__imagen{
+    width: 500px;
+    max-width: none;
+    height: 450px; 
+    max-height: none;
+}
+#modal.mostrar{
+    opacity: 1;
+    transform: unset;
+    transition: opacity 0.4s , transform 1s;
+    pointer-events: unset;
+}
+.modal__titulo{
+    color: white;
+    font-size: 60px;
+}
+
+.modal_cerrar {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 24px;
+    color: #00ff00;
+    background-color: #000;
+    padding: 10px 20px;
+    border: 2px solid #00ff00;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+.tilulo {
+    grid-area: cabecera;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#hora {
+   
+    font-size: 40px;
+    color: black
+}
+
+
+
+/*estilo del scroll*/
+.pantalla::-webkit-scrollbar {
+    width: 12px; 
+}
+
+.pantalla::-webkit-scrollbar-track {
+    background-color: transparent; 
+}
+
+.pantalla::-webkit-scrollbar-thumb {
+    background-color: #888; 
+    border-radius: 6px; 
+}
+
+.pantalla::-webkit-scrollbar-thumb:hover {
+    background-color: #555; 
+}
