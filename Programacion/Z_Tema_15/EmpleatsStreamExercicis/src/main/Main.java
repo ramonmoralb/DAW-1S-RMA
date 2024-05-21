@@ -13,10 +13,14 @@ import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collector;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
+import javax.swing.text.html.HTMLDocument;
 
 /**
  *
@@ -312,7 +316,7 @@ public class Main {
                 .forEach((a, e) -> System.out.println(a + e));
         System.out.println("-----------------------------------------");
         System.out.println();
-        
+
         // 21. Obtín una llista d'Strings que continga DNI dels empleats i el nom d'eixe empleat amb el format DNI - Nom. Llista ordenada per DNI
         System.out.println("21. Obtín una llista d'Strings que continga DNI dels empleats i el nom d'eixe empleat amb el format DNI - Nom. Llista ordenada per DNI");
         listaDeEmpleados.stream()
@@ -320,15 +324,14 @@ public class Main {
                 .forEach(System.out::println);
         System.out.println("-----------------------------------------");
         System.out.println();
-        
+
         // 22A. Donat un array bidimensional d'Integer transformar-lo en un array unidimensional amb els mateixos valors:
         System.out.println("22A. Donat un array bidimensional d'Integer transformar-lo en un array unidimensional amb els mateixos valors:");
         Integer[][] matriuInteger = {{3, 2, 5}, {0, -8, 7}, {9, 9, 6}};
         Stream.of(matriuInteger)
                 .flatMap(aplanado -> Stream.of(aplanado))
                 //  .map(String::valueOf)
-                .toArray()
-                ;
+                .toArray();
         System.out.println("-----------------------------------------");
         System.out.println();
 
@@ -339,7 +342,7 @@ public class Main {
                 .flatMapToInt(aplanadoInt -> Arrays.stream(aplanadoInt))
                 .toArray();
         for (int i : s) {
-            System.out.println("matriz de int :  "+i);
+            System.out.println("matriz de int :  " + i);
         }
         System.out.println("-----------------------------------------");
         System.out.println();
@@ -368,8 +371,7 @@ public class Main {
         listaDeEmpleados.stream()
                 .filter(e -> e.getTitols().contains("Llicenciatura"))
                 .findAny()
-                .ifPresentOrElse(System.out::println, () -> System.out.println("Nínguno está licenciado"))
-                ;  
+                .ifPresentOrElse(System.out::println, () -> System.out.println("Nínguno está licenciado"));
         System.out.println("-----------------------------------------");
         System.out.println();
         // 26. Mostra per a cada nom d'empleat la suma de les lletres dels seus titols
@@ -381,16 +383,89 @@ public class Main {
         System.out.println();
 
         // 27. Mostra el total de lletres dels titols (incloent duplicats) dels empleats
+        System.out.println("27. Mostra el total de lletres dels titols (incloent duplicats) dels empleats");
+        int totalLetrasTitulos = listaDeEmpleados.stream()
+                .map(Empleat::getTitols)
+                .flatMap(e -> e.stream())
+                .mapToInt(e -> e.length())
+                .sum();
+        System.out.println("Total letras títulos: " + totalLetrasTitulos);
+        System.out.println("-----------------------------------------");
+        System.out.println();
+
         // 28. Mostra l'empleat amb major quantitat de títols
+        listaDeEmpleados.stream()
+                .collect(Collectors.maxBy(Comparator.comparingInt(e -> e.getTitols().size())))
+                .ifPresent(System.out::println);
+
         // 29A. Obtín una llista que continga 5 aleatoris entre 0 i 9 en format String
+        List<String> listaAleatorios = Stream.iterate(0, i -> i + 1)
+                .limit(5)
+                .map(rp -> new Random().nextInt(10))
+                .map(String::valueOf)
+                .collect(Collectors.toList());
+        System.out.println("Lista de 5 aleatorios  " + listaAleatorios);
+        System.out.println("-----------------------------------------");
+        System.out.println();
+
         // 29B. El mateix d'abans, però ara sense valors repetits.
+        System.out.println(" 29B. El mateix d'abans, però ara sense valors repetits.");
+        List<String> listaAleatoriosSinRepes = Stream.iterate(0, i -> i + 1)
+                .map(rp -> new Random().nextInt(10))
+                .distinct()
+                .limit(5)
+                .map(String::valueOf)
+                .collect(Collectors.toList());
+        System.out.println("Lista de 5 aleatorios sin repetidos  " + listaAleatoriosSinRepes);
+        System.out.println("-----------------------------------------");
+        System.out.println();
+
         // 30. Crea un stream amb tots els números positius divisibles entre 3. Després filtra aquells que siguen quadrats perfectes. 
         // Després descarta els 5 primers valors obtinguts. Finalment mostra els 10 següents valors obtinguts
+        Stream.iterate(0, i -> i + 1)
+                .filter(n -> n > 0 && n % 3 == 0 && n == Math.sqrt(n) * Math.sqrt(n))
+                .skip(5)
+                .limit(10)
+                .forEach(cp -> System.out.println("5 Cuadrados perofectos divisibles entre 3 a partir del 5to = " + cp));
+        System.out.println("-----------------------------------------");
+        System.out.println();
+
         // 31. A partir dels cognoms dels empleats imprimeix amb una operació intermèdia els cognoms sense transformar i després transformats en majúscules.
+        System.out.println("31. A partir dels cognoms dels empleats imprimeix amb una operació intermèdia els cognoms sense transformar i després transformats en majúscules.");
+        listaDeEmpleados.stream()
+                .map(Empleat::getCognoms)
+                .peek(System.out::println)
+                .map(String::toUpperCase)
+                .peek(System.out::println)
+                .count();
+        System.out.println("-----------------------------------------");
+        System.out.println();
         // Finalment retorna el nombre d'empleats.
         // 32. Imprimeix el cognom dels empleats ordenats en ordre alfabètic invers.
+        System.out.println("32. Imprimeix el cognom dels empleats ordenats en ordre alfabètic invers.");
+        listaDeEmpleados.stream()
+                .map(Empleat::getCognoms)
+                .sorted(Comparator.reverseOrder())
+                .forEach(System.out::println);
+        System.out.println("-----------------------------------------");
+        System.out.println();
+
         // 33. Obtín la suma dels títols de tots els empleats
+        System.out.println(" 33. Obtín la suma dels títols de tots els empleats");
+        final int totalTitulos = listaDeEmpleados.stream()
+                .mapToInt(e -> e.getTitols().size())
+                .sum();
+        System.out.println("total titulos " + totalTitulos);
         // 34. Obtín un String amb la concatenació dels títols d'aquells empleats que tinguen menys de 30 anys, separats per espais (sense duplicats)
+        System.out.println("34. Obtín un String amb la concatenació dels títols d'aquells empleats que tinguen menys de 30 anys, separats per espais (sense duplicats)");
+        String titulosMenos30 = listaDeEmpleados.stream()
+                .filter(e -> e.getEdat() < 30)
+                .flatMap(t -> t.getTitols().stream())
+                .distinct()
+                .collect(Collectors.joining("  \n", "Lista de titulos menores de 30: \n", "."));
+        System.out.println(titulosMenos30);
+        System.out.println("-----------------------------------------");
+        System.out.println();
         // 35A. Mostra el cognom del primer dels empleats trobat que tinga menys de 30 anys i que tinga una llicenciatura. En cas de no trobar-lo mostra "No trobat"
         // ¿I si proves per a menors de 40?
         // 35B. Mostra el primer dels empleats (complet) trobat que tinga menys de 30 anys i que tinga una llicenciatura. En cas de no trobar-lo mostra "No trobat"
