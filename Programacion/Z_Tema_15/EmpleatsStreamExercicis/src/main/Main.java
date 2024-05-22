@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
@@ -456,6 +457,8 @@ public class Main {
                 .mapToInt(e -> e.getTitols().size())
                 .sum();
         System.out.println("total titulos " + totalTitulos);
+        System.out.println("-----------------------------------------");
+        System.out.println();
         // 34. Obtín un String amb la concatenació dels títols d'aquells empleats que tinguen menys de 30 anys, separats per espais (sense duplicats)
         System.out.println("34. Obtín un String amb la concatenació dels títols d'aquells empleats que tinguen menys de 30 anys, separats per espais (sense duplicats)");
         String titulosMenos30 = listaDeEmpleados.stream()
@@ -467,19 +470,90 @@ public class Main {
         System.out.println("-----------------------------------------");
         System.out.println();
         // 35A. Mostra el cognom del primer dels empleats trobat que tinga menys de 30 anys i que tinga una llicenciatura. En cas de no trobar-lo mostra "No trobat"
+        System.out.println(" // 35A. Mostra el cognom del primer dels empleats trobat que tinga menys de 30 anys i que tinga una llicenciatura. En cas de no trobar-lo mostra \"No trobat\"");
+
+        listaDeEmpleados.stream()
+                .filter(e -> e.getEdat() < 30 && e.getTitols().contains("Llicenciatura"))
+                .map(Empleat::getCognoms)
+                .findFirst()
+                .ifPresentOrElse(e -> System.out.println("Apellido Primero menor de 30 años con licentiatura " + e), () -> System.out.println("No trobat"));
+        System.out.println("-----------------------------------------");
+        System.out.println();
         // ¿I si proves per a menors de 40?
+        listaDeEmpleados.stream()
+                .filter(e -> e.getEdat() < 40 && e.getTitols().contains("Llicenciatura"))
+                .map(Empleat::getCognoms)
+                .findFirst()
+                .ifPresentOrElse(e -> System.out.println("Apellido Primero menor de 40 años con licentiatura  : " + e), () -> System.out.println("No trobat"));
+        System.out.println("-----------------------------------------");
+        System.out.println();
         // 35B. Mostra el primer dels empleats (complet) trobat que tinga menys de 30 anys i que tinga una llicenciatura. En cas de no trobar-lo mostra "No trobat"
+        System.out.println(" 35B. Mostra el primer dels empleats (complet) trobat que tinga menys de 30 anys i que tinga una llicenciatura. En cas de no trobar-lo mostra \"No trobat\"");
+        listaDeEmpleados.stream()
+                .filter(e -> e.getEdat() < 30 && e.getTitols().contains("Llicenciatura"))
+                .findFirst()
+                .ifPresentOrElse(e -> System.out.println("Empleado completo Primero menor de 30 años con licentiatura  : " + e), () -> System.out.println("No trobat"));
+        System.out.println("-----------------------------------------");
+        System.out.println();
         // ¿I si proves per a menors de 40?
+        System.out.println(" 35B. Mostra el primer dels empleats (complet) trobat que tinga menys de 30 anys i que tinga una llicenciatura. En cas de no trobar-lo mostra \"No trobat\"");
+        listaDeEmpleados.stream()
+                .filter(e -> e.getEdat() < 40 && e.getTitols().contains("Llicenciatura"))
+                .findFirst()
+                .ifPresentOrElse(e -> System.out.println("Empleado completo Primero menor de 40 años con licentiatura  : " + e), () -> System.out.println("No trobat"));
+        System.out.println("-----------------------------------------");
+        System.out.println();
+
         // 36. Obtín un LinkedHashSet dels títols que tenen tots els empleats.
+        System.out.println("36. Obtín un LinkedHashSet dels títols que tenen tots els empleats.");
+        listaDeEmpleados.stream()
+                .map(Empleat::getTitols)
+                .flatMap(e -> e.stream())
+                .collect(Collectors.toCollection(LinkedHashSet::new))
+                .forEach(System.out::println);
+        System.out.println("-----------------------------------------");
+        System.out.println();
         // 37. Obtín un Map amb dos claus, la primera tindrá com a valors una llista dels empleats amb el títol de CFGS i l'altra clau tindrá una llista amb els que no el tenen.
+        System.out.println("37. Obtín un Map amb dos claus, la primera tindrá com a valors una llista dels empleats amb el títol de CFGS i l'altra clau tindrá una llista amb els que no el tenen.");
+        listaDeEmpleados.stream()
+                .collect(Collectors.collectingAndThen(Collectors.partitioningBy(e -> e.getTitols().contains("CFGS")), e -> e))
+                .forEach((k, v) -> System.out.println(k + " -- " + v));
+        System.out.println("-----------------------------------------");
+        System.out.println();
+
         // 38. A partir d'una llista d'String retorna la mateixa llista pero sense cadenes buides
+        System.out.println("38. A partir d'una llista d'String retorna la mateixa llista pero sense cadenes buides");
         List<String> elementsOriginals = List.of("aigua", "", "llet", "oli", "", "  ", "lletuga");
-
-        // 39. Obtín una cadena separada per comes basada en una llista determinada d'enters. 
+        elementsOriginals.stream()
+                .filter(e -> !e.isBlank())
+                .toList()
+                .forEach(System.out::println);
+        System.out.println("-----------------------------------------");
+        System.out.println();
+        // 39. Obtín una cadena separada per comes basada en una llista determinada d'enters.
+        System.out.println("39. Obtín una cadena separada per comes basada en una llista determinada d'enters.");
+        List<Integer> enterosLista = List.of(1, 2, 3, 4, 5);
+        enterosLista.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(","));
+        System.out.println("Lista de enteros separada por comas: " + enterosLista);
+        System.out.println("-----------------------------------------");
+        System.out.println();
         // Cada element ha d'anar precedit de la lletra 'p' si el nombre és parell i precedit de la lletra 'i' si el nombre és imparell. 
-        // Per exemple, si la llista d'entrada és (3,44), la eixida hauria de ser 'i3, p44'.
-        List<Integer> llistaEnters = List.of(9, 23, 4, 15);
+        System.out.println("Cada element ha d'anar precedit de la lletra 'p' si el nombre és parell i precedit de la lletra 'i' si el nombre és imparell.");
+        enterosLista.stream()
+                .map(i -> { if (i % 2 == 0) { return "p".concat(String.valueOf(i)); } else {return "i".concat(String.valueOf(i)); } })
+                .forEach(System.out::println);
+        System.out.println("-----------------------------------------");
+        System.out.println();
+                   
+                       
+                                           
+                   
+               
+                
 
+        // Per exemple, si la llista d'entrada és (3,44), la eixida hauria de ser 'i3, p44'.
         // 40.A partir dels empleats. Obtín un mapa que tinga com a clau el nom del departament i com a valor un altre mapa
         // Este segon mapa tindrà com a clau el cognom de l'empleat y com a valor la llista de títols que té.
         // EXTRA A: A partir d'un String retorna les lletres distintes que conté, separades per comes (només lletres, no espais ni números ni altres caracters)
