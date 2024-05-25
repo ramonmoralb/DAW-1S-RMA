@@ -547,14 +547,13 @@ public class Main {
         System.out.println("-----------------------------------------");
         System.out.println();
                    
-                       
-                                           
-                   
+                                                                             
                
-                
-
-        // Per exemple, si la llista d'entrada és (3,44), la eixida hauria de ser 'i3, p44'.
         // 40.A partir dels empleats. Obtín un mapa que tinga com a clau el nom del departament i com a valor un altre mapa
+        System.out.println("40.A partir dels empleats. Obtín un mapa que tinga com a clau el nom del departament i com a valor un altre mapa");
+        listaDeEmpleados.stream()
+                .collect(Collectors.groupingBy(Empleat::getDepartament, Collectors.toMap(Empleat::getCognoms,e -> e.getTitols().stream().toList() )))    
+                ; 
         // Este segon mapa tindrà com a clau el cognom de l'empleat y com a valor la llista de títols que té.
         // EXTRA A: A partir d'un String retorna les lletres distintes que conté, separades per comes (només lletres, no espais ni números ni altres caracters)
         String frase1 = "Tinc un 8 en PROG";
