@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package main;
 
 import dao.*;
@@ -11,18 +8,10 @@ import java.util.stream.Collectors;
 import dto.Departament;
 import java.math.BigInteger;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Optional;
 import java.util.Random;
-import java.util.stream.Collector;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
-import javax.swing.text.html.HTMLDocument;
-
 /**
  *
  * @author jmas
@@ -32,41 +21,13 @@ public class Main {
     public static void main(String[] args) {
         List<Departament> listaDepartamentos = DepartamentsDAO.getDepartaments(); // creo la listaDedeparpamentos !! producción no contiene empleados
         List<Empleat> listaDeEmpleados = EmpleatsDAO.getEmpleats();  // creo la lista de empleados
-        /*        System.out.println("Lista original de empleados: ");
-        for (Empleat e : listaDeEmpleados) { // con salto de linea
-            System.out.println(e);
-        }
-        System.out.println();
-         */
-        //muestro la lista con stream
-        System.out.println("Lista de empleados con programación funcional: ");
-        listaDeEmpleados.stream()
-                //.map(e -> e)  // no hace falta mapear, ya tiene toda la lista
-                .forEach(System.out::println);
-        System.out.println();
-
-        /*
-        System.out.println("Lista de departamentos: ");  //muestra todos los departamentos, hasta producción que está vacio
-        for (Departament e : listaDepartamentos) {        
-               System.out.println("Nombre departamento: "+e.getNom());   //  
-               System.out.println(e.getEmpleatsNoUsar());
-        }
-        System.out.println();
-        System.out.println("----------------------------");
-         */
-        System.out.println("Lista departamentos c0n programación funcional");
-        listaDepartamentos.stream()
-                .forEach(System.out::println);
-        System.out.println();
-        System.out.println("----------------------------");
 
         // 1.- Imprimeix el primer empleat trobat amb més de 50 anys
         System.out.println("1. Primero mayor de 50:");
         listaDeEmpleados.stream() // 
                 .filter(e -> e.getEdat() > 50) // la condición
-                .findFirst() // el primero que queda de la condición  
-                .ifPresent(e -> System.out.println(e)) // devuelve un optional, por eso el if present            
-                ;
+                .findFirst()
+                .ifPresentOrElse(e -> System.out.println(e), () -> System.out.println("No encotrado"));
         System.out.println();
         System.out.println("----------------------------");
 
@@ -91,15 +52,16 @@ public class Main {
                 .filter(e -> e.getEdat() > 50)
                 .count()
         );
+        System.out.println("----------------------");
         System.out.println();
 
         final long CANTIDADMAYORES50 = listaDeEmpleados.stream()
                 .filter(e -> e.getEdat() > 50)
                 .count();
         System.out.println("Empleados mayores de 50 con constante: " + CANTIDADMAYORES50);
-        System.out.println();
         System.out.println("--------------");
-
+        System.out.println();
+        
         // 5. Imprimeix el nom dels empleats del departament d'informàtica, en majúscules.
         System.out.println("5. Imprimeix el nom dels empleats del departament d'informàtica, en majúscules.");
         listaDeEmpleados.stream()
@@ -108,8 +70,9 @@ public class Main {
                 //.map(Empleat::getNom)  //
                 .map(String::toUpperCase)
                 .forEach(System.out::println);
+        System.out.println("--------------"); 
         System.out.println();
-        System.out.println("--------------");
+       
 
         // 6. Imprimeix la quantitat de lletres de l'empleat d'informàtica amb el nom més llarg.
         System.out.println("6. Imprimeix la quantitat de lletres de l'empleat d'informàtica amb el nom més llarg.");
@@ -119,7 +82,7 @@ public class Main {
                 .mapToInt(m -> m.length())
                 .max()
                 .ifPresentOrElse(System.out::println, () -> System.out.println("No encontrado")); // 
-
+        System.out.println("----------------------------");
         System.out.println();
 
         // 7. Imprimeix el nom dels departaments que comencen per C
@@ -137,16 +100,20 @@ public class Main {
                 .mapToInt(e -> e.getEdat())
                 .sum();
         System.out.println("Todas las edades de la lista suman: " + SUMA_EDADES);
-        System.out.println();
         System.out.println("-----------------");
+        System.out.println();
+       
 
         // 9 UTILITZA EL MÈTODE GETEMPLEATS DE LA CLASSE DEPARTAMENT (NOMÉS PER A L'EXERCICI 9 I 10)
         // Imprimeix la quantitat d'empleats de cada departament 
         System.out.println("9.  Imprimeix la quantitat d'empleats de cada departament");
         listaDepartamentos.stream()
                 .collect(Collectors.toMap(departamento -> departamento.getNom(), departamento -> departamento.getEmpleatsNoUsar().size()))
-                .forEach((a, b) -> System.out.println("Departamento: " + a + " número operarios  " + b));
-
+                .forEach((a, b) -> System.out.println("Departamento: " + a + " número operarios  " + b))
+                ;
+        System.out.println("-----------------");
+        System.out.println();  
+        
         // 10. UTILITZANT EL MÈTODE GETEMPLEATS DE LA CLASSE DEPARTAMENT (NOMÉS PER A L'EXERCICI 9 I 10)
         // Imprimeix la llista de noms dels empleats del departament comercial i de comptatilitat (una única llista d'String)
         System.out.println("10. Imprimeix la llista de noms dels empleats del departament comercial i de comptatilitat (una única llista d'String)");
@@ -176,22 +143,10 @@ public class Main {
                 .map(e -> e.getNom())
                 .sorted((a, b) -> a.compareTo(b))
                 .toList()
-                .forEach(empleado -> System.out.println(empleado));
-
+                .forEach(empleado -> System.out.println(empleado));       
+        System.out.println("-----------------");
+        System.out.println();
         // 12. Mostra la mitjana d'edat dels empleats del departament d'informàtica.
-        //para los del departamento de informatica
-        listaDeEmpleados.stream()
-                .filter(e -> e.getDepartament().getNom().equals("Informàtica"))
-                .map(Empleat::toString)
-                .forEach(System.out::println);
-
-//tambien puedo sacar la suma de las edades.
-        System.out.println(listaDeEmpleados.stream() // lo meto dentro del print y lo saco directamente, si no debería hacer una constante  final int SUMA ....
-                .filter(e -> e.getDepartament().getNom().equals("Informàtica"))
-                .mapToInt(Empleat::getEdat)
-                .sum());
-
-        //solución
         System.out.println("12. La media de edad de los empleados del departamentoo de informatica es: ");
         listaDeEmpleados.stream()
                 .filter(e -> e.getDepartament().getNom().equals("Informàtica"))
@@ -199,49 +154,43 @@ public class Main {
                 .average()
                 .ifPresent(System.out::print) // average() devuelve un Optional por lo tanto metodos de optional
                 ;
+        System.out.println("-------------------------");
         System.out.println();
 
         // 13. Mostra un String que serà el resultat de concatenar la primera lletra de cada departament.
-        // esto no devuelve un string pero muestra lo que pide
         System.out.println("13. Mostra un String que serà el resultat de concatenar la primera lletra de cada departament.");
-        listaDeEmpleados.stream()
-                .map(e -> e.getDepartament().getNom().charAt(0))
-                .distinct()
-                .forEach(System.out::print) // imprime directamente / pero no es un string
-                ;
-        System.out.println();
-        System.out.println("-----------------------------------------");
-        //esto devuelve un string
-
         String primerasLetrasStr = listaDeEmpleados.stream()
                 .map(e -> e.getDepartament().getNom().substring(0, 1))
                 .collect(Collectors.joining());
         System.out.println(primerasLetrasStr);
-        System.out.println();
         System.out.println("-----------------------------------------");
-
+        System.out.println();
+         
         // 14. Mostra el número de telèfon més alt dels departaments.
         System.out.println("14. Mostra el número de telèfon més alt dels departaments.");
         listaDeEmpleados.stream()
                 .map(e -> e.getDepartament().getTelefon())
                 .max((a, b) -> a.compareTo(b)) // esto irá iterando y guardando en a el valor máximo y comparandolo con la siguiente entrada del mapa
                 .ifPresent(System.out::println) // max() devuelve optional   
-                ;
-        System.out.println();
+                ; 
         System.out.println("-----------------------------------------");
-
+        System.out.println();
+        
         // 15. Mostra el departament complet amb el número de telèfon més alt.
         System.out.println("15. Mostra el departament complet amb el número de telèfon més alt.");
-        listaDeEmpleados.stream()
-                .map(e -> e.getDepartament())
+        listaDepartamentos.stream()
                 .max((a, b) -> a.getTelefon() - b.getTelefon())
-                .ifPresentOrElse(e -> System.out.println("El número mas alto es: " + e), () -> System.out.println("No encontrado"));
-
+                .ifPresentOrElse(System.out::println, () -> System.out.println("No encotrado"))
+                ;
+        System.out.println("-----------------------------------------");
+        System.out.println();
         // 16. Sense fer ús del mètode "getEmpleats". Dels departament que tenen treballadors, mostrar el nom del departament i el nombre de treballadors que hi treballen.      
+        
         System.out.println("16. Sense fer ús del mètode \"getEmpleats\". Dels departament que tenen treballadors, mostrar el nom del departament i el nombre de treballadors que hi treballen.");
+        //desde la lista de emplados obetengo los departamentos que tienen empleados
         listaDeEmpleados.stream()
                 .map(Empleat::getDepartament)
-                .collect(Collectors.groupingBy(Departament::getNom, Collectors.counting())) //la segunda parte del gropuingBy interactua con los valores de la primera
+                .collect(Collectors.groupingBy(Departament::getNom, Collectors.counting()))   
                 .forEach((a, e) -> System.out.println("Departamento:  " + a + "\nNúmero de empleados: " + e));
         System.out.println("-----------------------------------------");
         System.out.println();
@@ -249,12 +198,9 @@ public class Main {
         // 17A. Guarda en un Map un registre per a cada Departament (que tinga treballadors) que tinga associat com a valor la llista d'empleats d'eixe departament
         System.out.println("17A. Guarda en un Map un registre per a cada Departament (que tinga treballadors) que tinga associat com a valor la llista d'empleats d'eixe departament");
         listaDeEmpleados.stream()
-                //.map(Empleat::getDepartament)
                 .collect(Collectors.groupingBy(e -> e.getDepartament().getNom(), Collectors.toList()))
                 .forEach((a, e) -> System.out.println("Departamento:  " + a + "\nObjeto de empleados: " + e));
-        System.out.println("-----------------------------------------");
         System.out.println();
-
         System.out.println("\n--------------------\n");
 
         // 17B. Igual que l'anterior pero la llista no serà d'empleats sino del nom dels empleats
@@ -302,10 +248,17 @@ public class Main {
 
         // 20. Obtín un String que continga el mateix que abans, amb el format "Departament1:Empleat1, Departament2:Empleat2 ..."
         System.out.println("20. Obtín un String que continga el mateix que abans, amb el format \"Departament1:Empleat1, Departament2:Empleat2 ...");
-        Map<String, String> mapaEmleadoEdad = listaDeEmpleados.stream()
+
+      String DepartaMentosYEmp = listaDeEmpleados.stream()
                 .sorted((e, a) -> e.getEdat() - a.getEdat())
-                .collect(Collectors.groupingBy(e -> e.getDepartament().getNom(), Collectors.collectingAndThen(Collectors.toList(), e -> e.get(0).getNom())));
-        mapaEmleadoEdad.forEach((dpt, empleado) -> System.out.println("Departamento : " + dpt + "      ->   Empleado edad mínima : " + empleado));
+                .collect(Collectors.groupingBy(e -> e.getDepartament().getNom(), Collectors.collectingAndThen(Collectors.toList(), e -> e.get(0).getNom())))
+                .entrySet()
+                .stream()
+                .map(en -> en.getKey()+" : "+en.getValue())
+                .collect(Collectors.joining(" , ", "Lista \n", " ."))
+                        ;
+        System.out.println(DepartaMentosYEmp);
+       
         System.out.println("-----------------------------------------");
         System.out.println();
         //consultar otra manera que no seal el get, si el indice eta vacio el programa peta
@@ -317,11 +270,12 @@ public class Main {
                 .forEach((a, e) -> System.out.println(a + e));
         System.out.println("-----------------------------------------");
         System.out.println();
-
+     
         // 21. Obtín una llista d'Strings que continga DNI dels empleats i el nom d'eixe empleat amb el format DNI - Nom. Llista ordenada per DNI
         System.out.println("21. Obtín una llista d'Strings que continga DNI dels empleats i el nom d'eixe empleat amb el format DNI - Nom. Llista ordenada per DNI");
         listaDeEmpleados.stream()
                 .map(e -> e.getDni() + "---" + e.getNom())
+                .toList()
                 .forEach(System.out::println);
         System.out.println("-----------------------------------------");
         System.out.println();
@@ -329,10 +283,16 @@ public class Main {
         // 22A. Donat un array bidimensional d'Integer transformar-lo en un array unidimensional amb els mateixos valors:
         System.out.println("22A. Donat un array bidimensional d'Integer transformar-lo en un array unidimensional amb els mateixos valors:");
         Integer[][] matriuInteger = {{3, 2, 5}, {0, -8, 7}, {9, 9, 6}};
-        Stream.of(matriuInteger)
+        
+        
+       Integer unidimensional [] = Stream.of(matriuInteger)
                 .flatMap(aplanado -> Stream.of(aplanado))
-                //  .map(String::valueOf)
-                .toArray();
+                .toArray(Integer[]::new)
+        ;
+        System.out.println("Array unidmensional ");
+        for (var integer : unidimensional) {System.out.print(" "+ integer); }
+            
+        
         System.out.println("-----------------------------------------");
         System.out.println();
 
@@ -341,9 +301,11 @@ public class Main {
         int[][] matriuInt = {{3, 2, 5}, {0, -8, 7}, {9, 9, 6}};
         int s[] = Stream.of(matriuInt)
                 .flatMapToInt(aplanadoInt -> Arrays.stream(aplanadoInt))
-                .toArray();
+                .toArray()
+                ;
+        System.out.println("array unidimensional de int");
         for (int i : s) {
-            System.out.println("matriz de int :  " + i);
+            System.out.println(" " + i);
         }
         System.out.println("-----------------------------------------");
         System.out.println();
@@ -354,8 +316,11 @@ public class Main {
                 .map(Empleat::getTitols)
                 .flatMap(e -> e.stream())
                 .distinct()
-                //  .forEach(System.out::println)
-                .toList();
+                .sorted((e1 , e2) -> e1.compareTo(e2))
+                .toList()
+                .forEach(System.out::println)
+                ;
+                
         System.out.println("-----------------------------------------");
         System.out.println();
 
@@ -367,6 +332,7 @@ public class Main {
                 .forEach(System.out::println);
         System.out.println("-----------------------------------------");
         System.out.println();
+        
         // 25. Muestra un empleado cualquiera que tenga una licenciatura
         System.out.println("25. Muestra un empleado cualquiera que tenga una licenciatura");
         listaDeEmpleados.stream()
@@ -375,11 +341,12 @@ public class Main {
                 .ifPresentOrElse(System.out::println, () -> System.out.println("Nínguno está licenciado"));
         System.out.println("-----------------------------------------");
         System.out.println();
+        
         // 26. Mostra per a cada nom d'empleat la suma de les lletres dels seus titols
         System.out.println("26. Mostra per a cada nom d'empleat la suma de les lletres dels seus titols");
         listaDeEmpleados.stream()
                 .collect(Collectors.toMap(Empleat::getNom, e -> e.getTitols().stream().mapToInt(String::length).sum()))
-                .forEach((a, e) -> System.out.println("Nombre: " + a + "conteo de las letras de los títulos:  " + e));
+                .forEach((a, e) -> System.out.println("Nombre: " + a + ". Conteo de las letras de los títulos:  " + e));
         System.out.println("-----------------------------------------");
         System.out.println();
 
@@ -395,9 +362,13 @@ public class Main {
         System.out.println();
 
         // 28. Mostra l'empleat amb major quantitat de títols
+        System.out.println("28. Mostra l'empleat amb major quantitat de títols");
         listaDeEmpleados.stream()
                 .collect(Collectors.maxBy(Comparator.comparingInt(e -> e.getTitols().size())))
-                .ifPresent(System.out::println);
+                .ifPresent(System.out::println)
+                ;
+        System.out.println("-----------------------------------------");
+        System.out.println();
 
         // 29A. Obtín una llista que continga 5 aleatoris entre 0 i 9 en format String
         List<String> listaAleatorios = Stream.iterate(0, i -> i + 1)
@@ -433,12 +404,19 @@ public class Main {
 
         // 31. A partir dels cognoms dels empleats imprimeix amb una operació intermèdia els cognoms sense transformar i després transformats en majúscules.
         System.out.println("31. A partir dels cognoms dels empleats imprimeix amb una operació intermèdia els cognoms sense transformar i després transformats en majúscules.");
-        listaDeEmpleados.stream()
+       listaDeEmpleados.stream()
                 .map(Empleat::getCognoms)
-                .peek(System.out::println)
+                
+                .peek(e -> System.out.println(e))
+                ;   
+        long y =  listaDeEmpleados.stream()
+                .map(Empleat::getCognoms)
+                .peek(e -> System.out.println(e))
                 .map(String::toUpperCase)
                 .peek(System.out::println)
-                .count();
+                .count()
+                ;
+       System.out.println("el count : " + y);
         System.out.println("-----------------------------------------");
         System.out.println();
         // Finalment retorna el nombre d'empleats.
@@ -446,6 +424,7 @@ public class Main {
         System.out.println("32. Imprimeix el cognom dels empleats ordenats en ordre alfabètic invers.");
         listaDeEmpleados.stream()
                 .map(Empleat::getCognoms)
+                .sorted((e1 , e2) -> e1.compareTo(e2)) 
                 .sorted(Comparator.reverseOrder())
                 .forEach(System.out::println);
         System.out.println("-----------------------------------------");
@@ -459,19 +438,22 @@ public class Main {
         System.out.println("total titulos " + totalTitulos);
         System.out.println("-----------------------------------------");
         System.out.println();
+        
         // 34. Obtín un String amb la concatenació dels títols d'aquells empleats que tinguen menys de 30 anys, separats per espais (sense duplicats)
         System.out.println("34. Obtín un String amb la concatenació dels títols d'aquells empleats que tinguen menys de 30 anys, separats per espais (sense duplicats)");
         String titulosMenos30 = listaDeEmpleados.stream()
                 .filter(e -> e.getEdat() < 30)
-                .flatMap(t -> t.getTitols().stream())
+                .map(t -> t.getTitols())
+                .flatMap(e -> e.stream())
                 .distinct()
-                .collect(Collectors.joining("  \n", "Lista de titulos menores de 30: \n", "."));
+                .collect(Collectors.joining("  \n", "Lista de titulos menores de 30: \n", "."))
+                ;
         System.out.println(titulosMenos30);
         System.out.println("-----------------------------------------");
         System.out.println();
+        
         // 35A. Mostra el cognom del primer dels empleats trobat que tinga menys de 30 anys i que tinga una llicenciatura. En cas de no trobar-lo mostra "No trobat"
         System.out.println(" // 35A. Mostra el cognom del primer dels empleats trobat que tinga menys de 30 anys i que tinga una llicenciatura. En cas de no trobar-lo mostra \"No trobat\"");
-
         listaDeEmpleados.stream()
                 .filter(e -> e.getEdat() < 30 && e.getTitols().contains("Llicenciatura"))
                 .map(Empleat::getCognoms)
@@ -480,6 +462,7 @@ public class Main {
         System.out.println("-----------------------------------------");
         System.out.println();
         // ¿I si proves per a menors de 40?
+        System.out.println(" ¿I si proves per a menors de 40?");
         listaDeEmpleados.stream()
                 .filter(e -> e.getEdat() < 40 && e.getTitols().contains("Llicenciatura"))
                 .map(Empleat::getCognoms)
@@ -496,7 +479,8 @@ public class Main {
         System.out.println("-----------------------------------------");
         System.out.println();
         // ¿I si proves per a menors de 40?
-        System.out.println(" 35B. Mostra el primer dels empleats (complet) trobat que tinga menys de 30 anys i que tinga una llicenciatura. En cas de no trobar-lo mostra \"No trobat\"");
+        
+        System.out.println(" ¿I si proves per a menors de 40?");
         listaDeEmpleados.stream()
                 .filter(e -> e.getEdat() < 40 && e.getTitols().contains("Llicenciatura"))
                 .findFirst()
@@ -504,6 +488,7 @@ public class Main {
         System.out.println("-----------------------------------------");
         System.out.println();
 
+        
         // 36. Obtín un LinkedHashSet dels títols que tenen tots els empleats.
         System.out.println("36. Obtín un LinkedHashSet dels títols que tenen tots els empleats.");
         listaDeEmpleados.stream()
@@ -513,10 +498,11 @@ public class Main {
                 .forEach(System.out::println);
         System.out.println("-----------------------------------------");
         System.out.println();
+        
         // 37. Obtín un Map amb dos claus, la primera tindrá com a valors una llista dels empleats amb el títol de CFGS i l'altra clau tindrá una llista amb els que no el tenen.
         System.out.println("37. Obtín un Map amb dos claus, la primera tindrá com a valors una llista dels empleats amb el títol de CFGS i l'altra clau tindrá una llista amb els que no el tenen.");
         listaDeEmpleados.stream()
-                .collect(Collectors.collectingAndThen(Collectors.partitioningBy(e -> e.getTitols().contains("CFGS")), e -> e))
+                .collect(Collectors.partitioningBy(e -> e.getTitols().contains("CFGS")))
                 .forEach((k, v) -> System.out.println(k + " -- " + v));
         System.out.println("-----------------------------------------");
         System.out.println();
@@ -530,6 +516,8 @@ public class Main {
                 .forEach(System.out::println);
         System.out.println("-----------------------------------------");
         System.out.println();
+        
+        
         // 39. Obtín una cadena separada per comes basada en una llista determinada d'enters.
         System.out.println("39. Obtín una cadena separada per comes basada en una llista determinada d'enters.");
         List<Integer> enterosLista = List.of(1, 2, 3, 4, 5);
@@ -539,28 +527,74 @@ public class Main {
         System.out.println("Lista de enteros separada por comas: " + enterosLista);
         System.out.println("-----------------------------------------");
         System.out.println();
+        
         // Cada element ha d'anar precedit de la lletra 'p' si el nombre és parell i precedit de la lletra 'i' si el nombre és imparell. 
         System.out.println("Cada element ha d'anar precedit de la lletra 'p' si el nombre és parell i precedit de la lletra 'i' si el nombre és imparell.");
         enterosLista.stream()
-                .map(i -> { if (i % 2 == 0) { return "p".concat(String.valueOf(i)); } else {return "i".concat(String.valueOf(i)); } })
+                .map(i -> i%2==0 ? "p"+i.toString() :  "i"+i.toString() )
                 .forEach(System.out::println);
         System.out.println("-----------------------------------------");
         System.out.println();
-                   
-                                                                             
-               
+
         // 40.A partir dels empleats. Obtín un mapa que tinga com a clau el nom del departament i com a valor un altre mapa
         System.out.println("40.A partir dels empleats. Obtín un mapa que tinga com a clau el nom del departament i com a valor un altre mapa");
         listaDeEmpleados.stream()
-                .collect(Collectors.groupingBy(Empleat::getDepartament, Collectors.toMap(Empleat::getCognoms,e -> e.getTitols().stream().toList() )))    
-                ; 
+                .collect(Collectors.groupingBy(Empleat::getDepartament, Collectors.toMap(Empleat::getCognoms, e -> e.getTitols().stream().toList())));
         // Este segon mapa tindrà com a clau el cognom de l'empleat y com a valor la llista de títols que té.
+        System.out.println("-----------------------------------------");
+        System.out.println();
+
         // EXTRA A: A partir d'un String retorna les lletres distintes que conté, separades per comes (només lletres, no espais ni números ni altres caracters)
+        System.out.println("EXTRA A: A partir d'un String retorna les lletres distintes que conté, separades per comes (només lletres, no espais ni números ni altres caracters)");
         String frase1 = "Tinc un 8 en PROG";
-
+        System.out.println(frase1
+                .chars()
+                .filter(Character::isLetter)
+                .mapToObj(l -> String.valueOf((char) l))
+                .distinct()
+                .collect(Collectors.joining(","))
+        );
+        System.out.println("-----------------------------------------");
+        System.out.println();
         // EXTRA B: A partir d'un String retorna la quantitat de lletres distintes que conté (només lletres, no espais ni números ni altres caracters)
+        System.out.println(" // EXTRA B: A partir d'un String retorna la quantitat de lletres distintes que conté (només lletres, no espais ni números ni altres caracters)");
+        System.out.println(frase1
+                .chars()
+                .filter(Character::isLetter)
+                .distinct()
+                .count()
+        );
+        System.out.println("-----------------------------------------");
+        System.out.println();
+       
         // EXTRA C: Obtín un mapa que mostre com a clau cada lletra distinta del String, i com a valor la quantitat de vegades que apareix.
-        // EXTRA D: Mostra la lletra amb major freqüencia d'aparicions, i el nombre d'aparicions d'eixa lletra.
-    }
+        System.out.println("EXTRA C: Obtín un mapa que mostre com a clau cada lletra distinta del String, i com a valor la quantitat de vegades que apareix.");
+        System.out.println(frase1
+                .chars()
+                .filter(Character::isLetter)
+                .mapToObj(l -> String.valueOf((char) l))
+                .distinct() //comentar para mostrar todo el contenido de los caracteres del array 
+                .collect(Collectors.groupingBy(e -> e, Collectors.counting()))
+        );
+        System.out.println("-----------------------------------------");
+        System.out.println();
 
+        // EXTRA D: Mostra la lletra amb major freqüencia d'aparicions, i el nombre d'aparicions d'eixa lletra.
+        System.out.println("EXTRA D: Mostra la lletra amb major freqüencia d'aparicions, i el nombre d'aparicions d'eixa lletra.");
+        System.out.println("La letra que más se repite es: "
+                + frase1
+                        .chars()
+                        .filter(Character::isLetter)
+                        .mapToObj(l -> String.valueOf((char) l))
+                        .collect(Collectors.groupingBy(e -> e, Collectors.collectingAndThen(Collectors.counting(), Long::intValue)))
+                        .entrySet()
+                        .stream()
+                        .max((e1, e2) -> e1.getValue().compareTo(e2.getValue()))
+                        .map(e -> e.getKey())
+                        .get()
+        );
+        System.out.println("-----------------------------------------");
+        System.out.println();
+
+    }
 }
