@@ -1,0 +1,5 @@
+controlador\ProcessarFormulari.class
+modelo\Figura.class
+modelo\Circulo.class
+modelo\Rectangulo.class
+modelo\TrianguloEquilatero.class
