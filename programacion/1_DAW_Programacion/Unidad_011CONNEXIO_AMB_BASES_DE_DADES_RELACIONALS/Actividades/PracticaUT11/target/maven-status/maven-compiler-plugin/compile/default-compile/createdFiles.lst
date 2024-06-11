@@ -1,0 +1,6 @@
+model\OficinaDAO.class
+model\Oficina.class
+principal\Principal.class
+model\Empleat.class
+model\EmpleatDAO.class
+model\Connexio.class
