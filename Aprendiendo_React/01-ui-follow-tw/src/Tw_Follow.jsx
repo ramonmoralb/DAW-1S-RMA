@@ -1,5 +1,19 @@
-export function Tw_Follow({ formatUserName, userName, name, isFollow }) {
-  // console.log(isFollow);
+import { useState } from "react";
+export function Tw_Follow({ formatUserName, userName, name }) {
+  /*useState recibe es un array en primera posición recibe la variable y en segunda la función que lo modifica
+   * el primer parametro que recibe en la declaración marca el estado inicial
+   */
+  const [isFollow, setIsFollow] = useState(false);
+  const text = isFollow ? "Siguiendo" : "Seguir";
+
+  const botonClassName = isFollow
+    ? "tw-follow-boton is-follow"
+    : "tw-follow-boton";
+
+  const handleClick = () => {
+    setIsFollow(!isFollow);
+  };
+
   return (
     <article className="tw-follow">
       <header className="tw-follow-header">
@@ -9,13 +23,15 @@ export function Tw_Follow({ formatUserName, userName, name, isFollow }) {
           alt="avatar-prueba"
         />
         <div className="tw-follow-info">
-          <strong>{name}</strong>
+          {name}
           <span className="tw-follow-username">{formatUserName(userName)}</span>
         </div>
       </header>
 
       <aside>
-        <button className="tw-follow-boton">Follow</button>
+        <button className={botonClassName} onClick={handleClick}>
+          {text}
+        </button>
       </aside>
     </article>
   );
