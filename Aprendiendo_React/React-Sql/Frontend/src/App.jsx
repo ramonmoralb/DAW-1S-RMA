@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { GetUserByName } from "./GetUserByName";
 
 function App() {
   const [data, setData] = useState([]);
@@ -9,28 +10,31 @@ function App() {
       .catch((err) => console.log(err));
   }, []);
   return (
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Phone</th>
-            <th>Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((d, i) => (
-            <tr key={i}>
-              <td>{d.id}</td>
-              <td>{d.name}</td>
-              <td>{d.phone}</td>
-              <td>{d.email}</td>
+    <>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Nombre</th>
+              <th>Phone</th>
+              <th>Email</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {data.map((d, i) => (
+              <tr key={i}>
+                <td>{d.id}</td>
+                <td>{d.nombre}</td>
+                <td>{d.phone}</td>
+                <td>{d.email}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <GetUserByName />
+    </>
   );
 }
 export default App;

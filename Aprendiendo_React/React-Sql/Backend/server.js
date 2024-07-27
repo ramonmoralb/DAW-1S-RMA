@@ -20,6 +20,14 @@ app.get('/users', (req, res)=>{
         return res.json(data);
     })
 })
+app.get('/users/:name', (req, res) => {
+    const name = req.params.name;
+    const sql = "SELECT * FROM users WHERE nombre = ?";
+    db.query(sql, [name], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
 
 app.get('/' , (re,res) =>{
     return res.json(" Front backend side");
