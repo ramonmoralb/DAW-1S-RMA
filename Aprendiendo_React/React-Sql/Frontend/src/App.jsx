@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { GetUserByName } from "./GetUserByName";
+import AddUser from "./AddUser";
 
 function App() {
   const [data, setData] = useState([]);
@@ -34,6 +35,7 @@ function App() {
         </table>
       </div>
       <GetUserByName />
+      <AddUser />
     </>
   );
 }
