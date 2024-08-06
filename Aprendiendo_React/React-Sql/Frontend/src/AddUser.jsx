@@ -49,7 +49,7 @@ const AddUser = () => {
   };
 
   return (
-    <div>
+    <div className="adda">
       <h1>Agregar Usuario</h1>
       <form onSubmit={handleSubmit}>
         <div>

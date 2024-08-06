@@ -1,0 +1,26 @@
+#root {
+    margin: 0 auto;
+    width: 80%;
+    padding: 15px;
+    display: grid;
+    gap: 50px;
+    grid-template-areas:
+        'tabla'
+        'buscador'
+        'adda';
+    justify-content: center;    
+}
+
+
+
+.buscador {
+    grid-area: buscador;
+}
+
+.add {
+    grid-area: adda;
+}
+
+.bd-table-container {
+    grid-area: tabla;
+}

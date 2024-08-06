@@ -67,6 +67,7 @@ app.post('/AddUser', (req, res) => {
     });
 });
 
+
 // Inicia el servidor en el puerto 8081
 app.listen(8081, () => {
     console.log('Servidor corriendo en http://localhost:8081');

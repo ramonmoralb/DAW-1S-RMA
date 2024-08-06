@@ -29,7 +29,7 @@ export function GetUserByName() {
   };
 
   return (
-    <div>
+    <div className="buscador">
       <label htmlFor="Nombre">Nombre a buscar:</label>
       <input
         placeholder="nombre..."
