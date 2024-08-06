@@ -38,27 +38,28 @@ export function GetUserByName() {
         onChange={handleInputChange}
       />
       <button onClick={handleSearchClick}>Buscar</button>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Phone</th>
-            <th>Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((d, i) => (
-            <tr key={i}>
-              <td>{d.id}</td>
-              <td>{d.nombre}</td>
-              <td>{d.phone}</td>
-              <td>{d.email}</td>
+      {data.length > 0 && ( // renderizado condicional de ser true mostrará la tabla
+        <table>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Nombre</th>
+              <th>Phone</th>
+              <th>Email</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {data.map((d, i) => (
+              <tr key={i}>
+                <td>{d.id}</td>
+                <td>{d.nombre}</td>
+                <td>{d.phone}</td>
+                <td>{d.email}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
 
       <div>
         {data.map((d, index) => (

@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
+import { Login } from "./Login";
 
 export function MostrarUsers() {
   const [data, setData] = useState([]);
@@ -31,6 +34,8 @@ export function MostrarUsers() {
           ))}
         </tbody>
       </table>
+
+      <Link to="/login">Login</Link>
     </div>
   );
 }

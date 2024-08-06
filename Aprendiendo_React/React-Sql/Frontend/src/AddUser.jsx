@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const AddUser = () => {
+export function AddUser() {
   const [id, setId] = useState("");
   const [nombre, setNombre] = useState("");
   const [phone, setPhone] = useState("");
@@ -94,6 +94,4 @@ const AddUser = () => {
       {success && <p style={{ color: "green" }}>{success}</p>}
     </div>
   );
-};
-
-export default AddUser;
+}
