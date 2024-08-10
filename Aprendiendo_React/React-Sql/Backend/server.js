@@ -50,15 +50,15 @@ app.get('/', (req, res) => {
 
 // Ruta POST para añadir usuarios
 app.post('/AddUser', (req, res) => {
-    const { id, nombre, phone, email } = req.body;
+    const { nombre, phone, email } = req.body;
     
     // Validación básica de datos
-    if (!id || !nombre || !phone || !email) {
+    if (!nombre || !phone || !email) {
         return res.status(400).send('Todos los campos son requeridos');
     }
 
-    const query = 'INSERT INTO users (id, nombre, phone, email) VALUES (?, ?, ?, ?)';
-    db.query(query, [id, nombre, phone, email], (err, result) => {
+    const query = 'INSERT INTO users ( nombre, phone, email) VALUES ( ?, ?, ?)';
+    db.query(query, [nombre, phone, email], (err, result) => {
         if (err) {
             console.error('Error al ejecutar la consulta:', err);
             return res.status(500).send('Error al añadir el registro');

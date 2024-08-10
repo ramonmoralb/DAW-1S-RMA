@@ -12,7 +12,7 @@ export function AddUser() {
     event.preventDefault(); // elimina accioner por defecto en este caso del form
 
     // valoda los datos
-    if (!id || !nombre || !phone || !email) {
+    if (!nombre || !phone || !email) {
       setError("Todos los campos son requeridos");
       return;
     }
@@ -24,7 +24,7 @@ export function AddUser() {
         // investigar , ayuda la ia
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id, nombre, phone, email }),
+      body: JSON.stringify({ nombre, phone, email }),
     })
       .then((response) => {
         if (response.ok) {

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Login } from "./Login";
+import { AddUser } from "./AddUser";
 
 export function MostrarUsers() {
   const [data, setData] = useState([]);
@@ -36,6 +37,8 @@ export function MostrarUsers() {
       </table>
 
       <Link to="/login">Login</Link>
+      <hr />
+      <Link to="/add-user">ad user</Link>
     </div>
   );
 }
